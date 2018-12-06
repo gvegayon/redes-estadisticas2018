@@ -1,0 +1,106 @@
+---
+title: "Motivacion"
+author: "George G. Vega Yon"
+date: "December 5, 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Estadistica Descriptiva vs Inferencia Estadistica
+
+Una distincion importante antes de partir:
+
+*   En esta presentacion nos enfocaremos en modelos estadisticos de redes, y no
+    en estadistica descriptiva
+    
+*   Nada en contra de lo ultimo, mas aun, describir dinamicas de redes utilizando
+    estadistica descriptiva es muy importante
+    
+*   A que me refiero con ED? Censo triadico, Cuenta de Network Motifs,
+    Distribucion de grado, etc.
+    
+*   Una referencia muy buena para lo anterior es:
+
+## El que
+
+*   En terminos generales, podemos encapsular el analisis estadistico de redes
+    en dos(tres) grandes familias:
+    
+    a.  Estudio de las estructuras sociales(o no)
+        
+    b.  Estudio del comportamiento 
+    
+    c.  Las dinamicas de comportamiento y su interaccion con las estructuras
+    sociales
+    
+*   El principal problema con estos objectos de estudio radica en el hecho de
+    que las observaciones son, por construccion, no idependientes.
+    
+## Cuando la inferencia estadistica se invalida
+
+*   Usualmente, cuando analizamos una muestra de datos de una poblacion $(y, X)$,
+    uno de los principales supuestos es IID
+    
+*   Dicho supuesto nos permite calcular la funcion de verosimilitud conjunta
+    tomando el producto de las partes individuales.
+    
+    $$
+    L(\theta|y, X) = \prod_i f(y|\theta, X),\quad y_i\sim iid
+    $$
+    
+    Esto hace la inferencia "sencilla".
+    
+*   Pero que pasa cuando los datos no son iid?
+
+*   Esto es precisamente lo que los modelos de redes y econometria espacial resuelven
+    
+
+## Notacion
+
+Primero, algo de notacion
+
+*   Un **grafo** es una tupla $(V, E)$ con $E\equiv\left\{(i, j): i,j \in V\right\}$,
+    $|V| = n, |E| = m$
+
+*   Para cada componente $i \in V$ observamos un vector $\{y_i, X_i^t\}$ (puede
+    ser una variable dependiente, y un set de caracteristicas)
+    
+*   En general, los grafos que utilizaremos aqui pueden ser representados como
+    una matriz cuadrada de tamaño $n$, la matriz adjacente, que puede ser o no
+    dicotómica (0/1), o no. La denotaremos como $W$.
+    
+## Estructuras sociales
+
+*   La pregunta clave: Que dio origen a $G$, el grafo?
+
+*   El tipo de modelo mas popular (en ciencias sociales) es el denominado
+    **Exponential Random Graph Model** (modelos de grafo exponencial)
+    
+*   En general (hay excepciones), $y=G$ es una unica observacion, una red, y tratamos
+    de estimar un modelo de tipo $\Pr\left(Y = y|X, \theta\right)$
+    
+*   Como veran, el principal problema de estimar este tipo de modelos es la
+    complejidad numerica... Para calcular la funcion de verosimilitud de un grafo
+    de tamaño $n$, debemos calcular $2^{n(n-1)}$ terminos, es decir, si $n = 6$,
+    la funcion de verosimilitud tiene $2^{6*5} = 1.073.741.824$ terminos :P.
+    
+## Comportamiento
+
+*   Si la pregunta es: Como la estructura social/tecnica influye en la variable $y$.
+
+*   Asumiendo o exogeneidad o independencia intertemporal, o estructura estatica,
+    podemos estimar modelos del tipo $\Pr\left(Y = y|X, G, \theta\right)$
+    
+*   La Econometria/Estadistica espacial tiene una amplia gama de modelos que pueden
+    ser utilizados en esta logica.
+    
+*   La familia de modelos que exploraremos aqui es la denominada Spatial Autoregressive
+    Models (SAR).
+    
+*   Nuevamente, la validez del uso de estos modelos depende fundamentalmente en
+    el hecho de si $G$ puede ser considerado exogeno para la variable dependiente.
+    
+    
