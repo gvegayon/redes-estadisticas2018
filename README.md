@@ -32,6 +32,8 @@ c.  SOAM y otros
 
 d.  Estimacion de modelos de Red: Diagnostico de estimacion, convergencia
     bondad de ajuste.
+    
+c.  Modelos no parametricos: Matching y Permutacion.
 
 ## Parte 3: Econometria Espacial
 
@@ -39,7 +41,4 @@ a.  Spatial Autoregresive Models: Descripcion, supuestos, cuando si/no,
 
 b.  Familia de modelos: Heterocedasticiad, Errores autocorrelacionados, IV sol
     y metodos de estimacion, SARAR, SAR Probit/Logit/MLogit
-
-
-
 

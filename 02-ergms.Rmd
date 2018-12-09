@@ -1,0 +1,238 @@
+---
+title: "02-redes"
+author: "George G. Vega Yon"
+date: "December 9, 2018"
+output: html_document
+bibliography: bibliography.bib
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Exponential Random Graph Models (ERGMs)
+
+*   ¿Qué conjunto de sub-estructuras dan origen al grafo observado?
+
+*   Por ejemplo: \# de triadas, \# de diadas homofílicas, \# de k-estrellas, etc.
+
+TABLA VA ACA
+
+
+*   En este caso, $\mathbf{Y} = \mathbf{G}$
+
+*   En general, la distribución de $\mathbf{Y}$ puede ser paremetrizada como sigue:
+    
+    $$
+    \Pr\left(\mathbf{Y}=\mathbf{y}|\theta, \mathcal{Y}\right) = \frac{\exp{\theta^{\mbox{T}}\mathbf{g}(\mathbf{y})}}{\kappa\left(\theta, \mathcal{Y}\right)},\quad\mathbf{y}\in\mathcal{Y}
+    \tag{1}
+    $$
+    
+    Donde $\theta\in\Omega\subset\mathbb{R}^q$ es el vactor de coeficientes, y 
+    $\mathbf{g}(\mathbf{y})$ es un *q*-vector de estadísticos basados en el
+    grafo $\mathbf{y}$.
+
+---
+
+*   El modelo (1) puede ser extendido para incluir covariables (*features*) 
+    a nivel nodal o de lazo reemplazando $\mathbf{g}(\mathbf{y})$ por
+    $\mathbf{g}(\mathbf{y}, \mathbf{X})$ 
+    
+*   El denominador,
+    
+    
+    $$
+    \kappa\left(\theta,\mathcal{Y}\right) = \sum_{\mathbf{z}\in\mathcal{Y}}\exp{\theta^{\mbox{T}}\mathbf{g}(\mathbf{z})}
+    $$
+    0
+    
+    Es la constante de normalización que asegura que (1) es una funcion de probabilidad.
+
+*   Aun restringiendo el conjunto $\mathcal{Y}$ a las redes de tamaño $n$,
+    el numero de elementos de $\mathcal{Y}$ hace la estimación de estos modelos
+    difícil [@Hunter2008].
+    
+    $$
+    N = 2^{n(n-1)}
+    $$
+    
+## ERGMs: Principales supuestos
+
+*   Modelo generador de datos
+
+*   Dependencia de diadas
+
+*   Red completa
+
+*   Lado práctico: Red relativemente mediana (par de miles de nodos, no más que eso)
+
+
+## Separable Exponential Random Graph Models (a.k.a. TERGMs)
+
+-   A discrete time model.
+
+-   Estimates a set of parameters $\theta = \{\theta^-, \theta^+\}$ that capture the transition dynamics from $\mathbf{Y}^{t-1}$ to $\mathbf{Y}^{t}$.
+
+-   Assuming that $(\mathbf{Y}^+\perp\mathbf{Y}^-) | \mathbf{Y}^{t-1}$ (the model **dynamic model** is separable), we estimate two models:
+    $$
+    \begin{align}
+    \Pr\left(\mathbf{Y}^+ = \mathbf{y}^+|\mathbf{Y}^{t-1} = \mathbf{y}^{t-1};\theta^+\right),\quad \mathbf{y}^+\in\mathcal{Y}^+(\mathbf{y}^{t-1})\\
+    \Pr\left(\mathbf{Y}^- = \mathbf{y}^-|\mathbf{Y}^{t-1} = \mathbf{y}^{t-1};\theta^-\right),\quad \mathbf{y}^-\in\mathcal{Y}^-(\mathbf{y}^{t-1})
+    \end{align}
+    $$
+
+-   So we end up estimating two ERGMs.
+    
+## Latent Network Models
+
+-   Social networks are a function of a latent space (literally, xyz for example) $\mathbf{Z}$.
+
+-   Individuals who are closer to each other within $\mathbf{Z}$ have a higher
+chance of been connected.
+
+-   Besides of estimating the typical set of parameters $\theta$, a key part of this model is find $\mathbf{Z}$.
+
+-   Similar to TERGMs, under the conditional independence assumption we can estimate:
+
+$$
+\Pr\left(\mathbf{Y} =\mathbf{y}|\mathbf{X} = \mathbf{x}, \mathbf{Z}, \theta\right) = \prod_{i\neq j}\Pr\left(y_{ij}|z_i, z_j, x_{ij},\theta\right)
+$$
+
+See @hoff2002
+
+
+
+## ERGMs: Estimación
+
+*   En el caso general, la estimacion de esta familia de modelos no es factible
+    utilizando enumeración exahustiva de los grafos.
+    
+*   Por ejemplo, si $n = 7$, entonces $\left|\mathcal{Y}\right| = 2^{7(7-1)} \approx 4.39\times10^{12}$
+
+*   Varios métodos propuestos para resolver este problema: Algoritmo Robbins-Monro
+    (*stochastic approximation*), MCMC-MLE
+
+*   Revisaremos el último
+
+---
+
+### MCMC-MLE
+
+1.  Initialize the algorithm with an initial guess of $\theta$, call it $\theta^{(t)}$
+
+2.  While (no convergence) do:
+    
+    a.  Using $\theta^{(t)}$, simulate $M$ networks by means of small changes in the $\mathbf{Y}_{obs}$ (the observed network). This part is done by using an importance-sampling method which weights each proposed network by it's likelihood conditional on $\theta^{(t)}$
+    
+    b.  With the networks simulated, we can do the Newton step to update the parameter $\theta^{(t)}$ (this is the iteration part in the `ergm` package): $\theta^{(t)}\to\theta^{(t+1)}$
+    
+    c.  If convergence has been reach (which usually means that $\theta^{(t)}$ and $\theta^{(t + 1)}$ are not very different), then stop, otherwise, go to step a.
+
+For more details see @lusher2012; @admiraal2006; @Snijders2002; @Wang2009 provides details on the algorithm used by PNet (which is the same as the one used in `RSiena`). @lusher2012 provides a short discussion on differences between `ergm` and `PNet`. 
+
+
+## Context  (cont'd)
+
+\begin{figure}
+\centering
+\includegraphics[width = .65\linewidth]{plot-graph-4-1.pdf}
+\end{figure}
+
+\pause
+
+How can we go beyond descriptive statistics? 
+
+## Small networks and Exponential Random Graph Models
+
+When trying to estimate ERGMs in little networks \pause
+
+*   MCMC fails to converge when trying to estimate a block diagonal (structural
+    zeros) model,\pause
+
+*   Same happens when trying to estimate an ERGM for a single (little) graph, \pause
+
+*   Even if it converges, the Asymptotic properties of MLEs are no longer valid
+    since the sample size is not large enough.
+
+    
+## Rethinking the problem
+
+\pause
+
+*   1st Step: Forget about MCMC-MLE estimation, take advantage of small
+    sample and use exact statistic for MLEs: \pause
+    
+    $$
+    \Pr\left(\mathbf{Y}=\mathbf{y}|\theta, \mathcal{Y}\right) = \frac{\exp{\theta^{\mbox{T}}\mathbf{g}(\mathbf{y})}}{\kappa\left(\theta, \mathcal{Y}\right)},\quad\mathbf{y}\in\mathcal{Y}
+    $$
+    
+*   This solves the problem of been able to estimate a small ergm. \pause
+
+*   For this we started working on the `lergm` R package
+    (available at https://github.com/USCCANA/lergm):\pause
+    
+    *   Not from scratch: uses some functions from statnet's `ergm`, in particular
+        `ergm-terms`.\pause
+    
+    *   High performing (up to some point): Some components written in C++\pause
+    
+    *   Very early stage of development...\pause we'll see if it is worth keep
+        working on it!
+
+## Example 1
+
+Let's start by trying to estimate an ERGM for a single graph of size 4
+
+```{r lergm1, echo=TRUE}
+library(lergm)
+set.seed(12)
+x <- sna::rgraph(4)
+lergm(x ~ edges + balance + mutual)
+```
+
+
+----------
+
+*   Cool, we are able to estimate ERGMs for little networks! (we actually call
+    them lergms), but...\pause
+    
+*   We still have issues regarding asymptotics.\pause
+
+*   We propose to solve this by using a pooled version of the ERGM
+
+
+## Solution
+
+*   When estimating a block diagonal ERGM we were essentially assuming
+    independence across networks.\pause
+
+*   This means that we can actually do the same with exact statistics approach
+    to calculate a joint likelihood:\pause
+    
+    $$
+    \Pr\left(\mathbf{Y}=\{\mathbf{y}_{\color{cyan} i}\}|\theta, \left\{\mathcal{Y}_{\color{cyan}i}\right\}\right) = {\color{cyan} \prod_i} \frac{\exp{\theta^{\mbox{T}}\mathbf{g}(\mathbf{y}_{\color{cyan} i})}}{\kappa_{\color{cyan} i}\left(\theta, \mathcal{Y}_{\color{cyan}i}\right)}
+    $$
+    \pause
+    
+*   By estimating a pooled version of the ERGM we can recover the asymptotics 
+    of MLEs.\pause
+    
+*   We implemented this in the `lergm` package
+    
+## Example 2
+
+Suppose that we have 3 little graphs of sizes 4, 5, and 5:
+
+```{r lergm2, echo=TRUE}
+library(lergm)
+set.seed(12)
+x1 <- sna::rgraph(4)
+x2 <- sna::rgraph(5)
+x3 <- sna::rgraph(5)
+
+lergm(list(x1, x2, x3) ~ edges + balance + mutual)
+```
+
+
+# Referencias
+
