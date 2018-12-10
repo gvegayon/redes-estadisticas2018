@@ -34,6 +34,10 @@ TABLA VA ACA
 
 ---
 
+*   Markov Graphs @Frank1986
+
+*   Intro a ERGMs [@ROBINS2007a; @ROBINS2007b].
+
 *   El modelo (1) puede ser extendido para incluir covariables (*features*) 
     a nivel nodal o de lazo reemplazando $\mathbf{g}(\mathbf{y})$ por
     $\mathbf{g}(\mathbf{y}, \mathbf{X})$ 
@@ -110,7 +114,7 @@ See @hoff2002
 *   Por ejemplo, si $n = 7$, entonces $\left|\mathcal{Y}\right| = 2^{7(7-1)} \approx 4.39\times10^{12}$
 
 *   Varios métodos propuestos para resolver este problema: Algoritmo Robbins-Monro
-    (*stochastic approximation*), MCMC-MLE
+    (*stochastic approximation*, @robbins1951), MCMC-MLE
 
 *   Revisaremos el último
 
@@ -118,17 +122,32 @@ See @hoff2002
 
 ### MCMC-MLE
 
-1.  Initialize the algorithm with an initial guess of $\theta$, call it $\theta^{(t)}$
+1.  Inicializar el algoritmo con un $\theta=\theta^{(t)}$,
+    por lo general se utiliza *Maximum-Pseudo-Likelihood-Estimator* (MPLE) que
+    equivale a una regresión logística.
 
-2.  While (no convergence) do:
+2.  Mientras $\neg{}Converencia$ :
     
-    a.  Using $\theta^{(t)}$, simulate $M$ networks by means of small changes in the $\mathbf{Y}_{obs}$ (the observed network). This part is done by using an importance-sampling method which weights each proposed network by it's likelihood conditional on $\theta^{(t)}$
+    a.  Utilizando $\theta^{(t)}$, simula $M$ redes modificando el grafo
+        $\mathbf{Y}_{obs}$ link a link. Esta parte se realiza utilizando un algoritmo
+        de *importance-sampling* donde la ponderacion de cada grafo esta dada por
+        la verosimilityd condicional en $\theta^{(t)}$
     
-    b.  With the networks simulated, we can do the Newton step to update the parameter $\theta^{(t)}$ (this is the iteration part in the `ergm` package): $\theta^{(t)}\to\theta^{(t+1)}$
+    b.  Con las redes simuladas, podemos realizar el paso *Newton* para actualizar
+        $\theta^{(t)}$ (esta es la parte de iteración en el paquete `ergm`):
+        $\theta^{(t)}\to\theta^{(t+1)}$
     
-    c.  If convergence has been reach (which usually means that $\theta^{(t)}$ and $\theta^{(t + 1)}$ are not very different), then stop, otherwise, go to step a.
+    c.  De haber alcanzado convergencia (Ej: la distancia entre $\theta^{(t)}$ y
+        $\theta^{(t + 1)}$ es cercana a cero), detener, de lo contrario volver
+        al paso a.
 
-For more details see @lusher2012; @admiraal2006; @Snijders2002; @Wang2009 provides details on the algorithm used by PNet (which is the same as the one used in `RSiena`). @lusher2012 provides a short discussion on differences between `ergm` and `PNet`. 
+Para más detalles vea @lusher2012; @admiraal2006; @Snijders2002; @Wang2009
+da detalles respecto del algoritmo utilizado en PNet (Robbins-Monro en `RSiena`).
+@lusher2012 muestra de manera breve las diferencias entre `ergm` and `PNet`. 
+
+-----
+
+*   *Degeneracy* @handcock2003; @Schweinberger2015
 
 
 ## Context  (cont'd)
