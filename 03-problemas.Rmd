@@ -1,0 +1,51 @@
+---
+title: "02-redes"
+author: "George G. Vega Yon"
+date: "December 9, 2018"
+output: html_document
+bibliography: bibliography.bib
+---
+
+## 3.1 Sesgo
+
+```{r}
+set.seed(1151)
+n   <- 500L
+k   <- 2L
+rho <- .5
+
+# Simulando covariables y coeficientes
+X   <- cbind(1, matrix(runif(n*k), ncol=k))
+b   <- cbind(runif(k + 1L, -1, 1))
+eps <- cbind(rnorm(n))
+
+# Simulando matriz espacial, utilizaremos el paquete igraph para esto
+library(igraph)
+library(Matrix) # Para acceder al dgCMatrix en la funcion rowSums
+
+# Modelo mundo pequeño parametros 8 (numero de vecinos) y .4 (probabilidad) de
+# re-cableo.
+net <- igraph::sample_smallworld(1, n, 8, .4)
+W   <- as_adj(net)
+
+# Normalizando matriz y visualizando
+W   <- W/rowSums(W)
+image(W)
+
+# Generando variable dependiente
+Y <- X %*% b + eps
+
+netdiffuseR::moran(Y, W)
+
+# Naive OLS
+exposure <- as.matrix(W %*% Y)
+
+summary(ans0 <- lm(Y ~ exposure + X[,-1]))
+
+library(spdep)
+summary(ans1 <- lagsarlm(Y ~ X[,-1], listw = mat2listw(W)))
+
+coef(ans0)
+coef(ans1)
+```
+

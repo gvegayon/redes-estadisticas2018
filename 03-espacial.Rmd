@@ -40,8 +40,7 @@ knitr::opts_chunk$set(echo = TRUE)
     
     $$
     \begin{align}
-    Y = & \alpha + \rho W Y + X\beta + \varepsilon,\quad\varepsilon\sim MVN(0,\sigma^2I_n) \\
-    \implies & Y = \left(I_n -\rho W\right)^{-1}(\alpha + X\beta + \varepsilon)
+    Y = & \alpha + \rho W Y + X\beta + \varepsilon,\quad\varepsilon\sim MVN(0,\sigma^2I_n)
     \end{align}
     $$
 
@@ -71,6 +70,92 @@ knitr::opts_chunk$set(echo = TRUE)
     there autocorrelation does consider effects over neighbors farther than 1 step
     away, which makes the specification of $W$ no critical. [see @LeSage2008]
 
-## Simular
+## Ejemplo con datos simulados
+
+*   Para simular un modelo SAR, podemos seguir los siguientes pasos:
+    
+    1.  Generar una matriz de covariables $X$ junto con sus respectivos coeficientes,
+    
+    2.  Generar un vector $\varepsilon \sim N(0,1)$, pregunta: ¿Importa no utilizar
+        la función MVN (`mvtnorm::rmvnorm`)?
+        
+    3.  Generar el vector $Y$ de la siguiente forma: 
+    
+        $$
+        Y = \left(I_n -\rho W\right)^{-1}(\alpha + X\beta + \varepsilon)
+        $$
+        
+        Donde $I_n$ es una matriz diagonal $n$.
+        
+## Ejemplo con datos simulados (cont.)
+
+
+
+```{r ejemplo1-dgp}
+
+# Parametros para la simulacion
+set.seed(1151)
+n   <- 500L
+k   <- 2L
+rho <- .5
+
+# Simulando covariables y coeficientes
+X   <- cbind(1, matrix(runif(n*k), ncol=k))
+b   <- cbind(runif(k + 1L, -1, 1))
+eps <- cbind(rnorm(n))
+
+# Simulando matriz espacial, utilizaremos el paquete igraph para esto
+library(igraph)
+library(Matrix) # Para acceder al dgCMatrix en la funcion rowSums
+
+# Modelo mundo pequeño parametros 8 (numero de vecinos) y .4 (probabilidad) de
+# re-cableo.
+net <- igraph::sample_smallworld(1, n, 8, .4)
+W   <- as_adj(net)
+
+# Normalizando matriz y visualizando
+W   <- W/rowSums(W)
+image(W)
+
+# Generando variable dependiente
+Y <- as.matrix(solve(diag(n) - rho*W) %*% (X %*% b + eps))
+```
+
+```{r ejemplo1-estimacion}
+# Estimacion
+library(spdep)
+
+# La I de moran
+netdiffuseR::moran(Y, W)
+
+# OBS: La implentacion en netdiffuseR es significativamente mas rapida que la del
+# paquete spdep (~ 100 veces en mi maquina).
+# Wlist <- mat2listw(W)
+# microbenchmark::microbenchmark(
+#   netdiffuseR::moran(Y, W), # Para matrices realmente grandes
+#   moran.test(Y, Wlist, alternative = "two.sided")  
+# )
+
+
+# Naive OLS
+exposure <- as.matrix(W %*% Y)
+
+summary(ans0 <- lm(Y ~ X[,-1]))
+lm.morantest(ans0, listw = mat2listw(W))
+
+netdiffuseR::moran(ans0$residuals, W)
+
+# Modelos de regresion
+ans1 <- lm(Y ~ exposure + X[,-1])
+ans2 <- lagsarlm(Y ~ X[,-1], listw = mat2listw(W))
+ans3 <- lagsarlm(Y ~ 0 + X, listw = mat2listw(W), Durbin = ~ X[,-1])
+
+coef(ans0)
+coef(ans1)
+coef(ans2)
+```
+
+
+
 
 ## Referencias
