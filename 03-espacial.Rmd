@@ -1,0 +1,76 @@
+---
+title: "02-redes"
+author: "George G. Vega Yon"
+date: "December 9, 2018"
+output: html_document
+bibliography: bibliography.bib
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Notación y conceptos fundamentales
+
+*   Matriz dispersa
+
+*   Matriz normalizada
+
+*   
+
+## Autocorrelación
+
+*   La I de Moran [@Moran1950]: Pregunta, ¿está la variable $X$ correlacionada a
+    nivel espacial?
+    
+    $$
+    I={\frac {N}{W}}{\frac {\sum _{i}\sum _{j}w_{ij}(x_{i}-{\bar {x}})(x_{j}-{\bar {x}})}{\sum _{i}(x_{i}-{\bar {x}})^{2}}}
+    $$
+    
+    Donde $W$ es una matriz normalizada (*row-normalized*) 
+
+## Spatial Autocorrelation Models (SAR a.k.a. Network Auto-correlation Models) {.smaller}
+
+*   Spatial Auto-correlation Models are mostly applied in the context of spatial
+    statistics and econometrics.
+    
+*   A wide family of models, you can find SA equivalents to Probit, Logit, MLogit, etc.
+    
+*   The SAR model has interdependence built-in using a Multivariate Normal Distribution:
+    
+    $$
+    \begin{align}
+    Y = & \alpha + \rho W Y + X\beta + \varepsilon,\quad\varepsilon\sim MVN(0,\sigma^2I_n) \\
+    \implies & Y = \left(I_n -\rho W\right)^{-1}(\alpha + X\beta + \varepsilon)
+    \end{align}
+    $$
+
+    Where $\rho\in[-1,1]$ and $W=\{w_{ij}\}$, with $\sum_j w_{ij} = 1$
+
+## Spatial Autocorrelation Models (SAR) (cont.) {.smaller}
+
+*   This is more close than we might think, since the $i$-th element of $Wy$ can be
+    expressed as $\frac{\sum_j a_{ij} y_j}{\sum_j a_{ij}}$, what we usually
+    define as exposure in networks, where $a_{ij}$ is an element of the $\{0,1\}$-adjacency
+    matrix .
+    
+    
+*   These models assume that $W$ is exogenous,
+    in other words, if there's homophily you won't be able to use it!
+    
+*   But there are solutions to this problem (using instrumental variables).
+
+## Qué Matriz?
+
+*   La pregunta "Cual de todas las posibles matrices debo utilizar" es más
+    común de lo que debería. 
+    
+*   
+
+*   Notice that $(I_n - \rho W)^{-1} = I_n + \rho W + \rho^2 W^2 + \dots$, hence
+    there autocorrelation does consider effects over neighbors farther than 1 step
+    away, which makes the specification of $W$ no critical. [see @LeSage2008]
+
+## Simular
+
+## Referencias

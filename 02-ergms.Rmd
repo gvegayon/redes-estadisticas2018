@@ -10,6 +10,33 @@ bibliography: bibliography.bib
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+## Un poco de historia
+
+De @Hunter2006:
+
+There has been a lot of work on models of the form (1.1), to which we refer as expo-
+nential random graph models or ERGMs for short. (We avoid the lengthier EFRGM, for
+“exponential family random graph models,” both for the sake of brevity and because we
+consider some models in this article that should technically be called curved exponential
+families.)
+
+*   Holland and Leinhardt (1981) appear to be the first to propose a specific case of
+model (1.1) in the literature. Their model, which they called the p1 model, resulted in each
+dyad—by which we mean each pair of nodes—having edges independently of every other
+dyad.
+
+*   Based on developments in spatial statistics (Besag 1974), Frank and Strauss (1986)
+generalized to the case in which dyads exhibit a kind of Markovian dependence: Two dyads
+are dependent, conditional on the rest of the graph, only when they share a node.
+
+*   Frank (1991) mentioned the application of model (1.1) to social networks in its full generality.
+
+
+*   This was pursued by Wasserman and Pattison (1996). In honor of Holland and Leinhardt’s
+p1 model, they referred to model (1.1) as p∗ (p-star), a name that has been widely applied
+to ERGMs in the social networks literature.
+
+
 ## Exponential Random Graph Models (ERGMs)
 
 *   ¿Qué conjunto de sub-estructuras dan origen al grafo observado?
@@ -34,7 +61,7 @@ TABLA VA ACA
 
 ---
 
-*   Markov Graphs @Frank1986
+*   *Markov dependence* lleva a *Markov Graphs* [@Frank1986].
 
 *   Intro a ERGMs [@ROBINS2007a; @ROBINS2007b].
 
@@ -161,46 +188,48 @@ da detalles respecto del algoritmo utilizado en PNet (Robbins-Monro en `RSiena`)
 
 How can we go beyond descriptive statistics? 
 
-## Small networks and Exponential Random Graph Models
+## Redes pequeñas y ERGMs
 
-When trying to estimate ERGMs in little networks \pause
+Cuando intentamos estimar ERGMs en redes pequeñas: \pause
 
-*   MCMC fails to converge when trying to estimate a block diagonal (structural
-    zeros) model,\pause
+*   MCMC no converge al intentar estimar un modelo de tipo *block diagonal*
+    (zeros estructurales),\pause
 
-*   Same happens when trying to estimate an ERGM for a single (little) graph, \pause
+*   Lo mismo ocurre cuando intentamos estimar un ERGM para una red pequeña, \pause
 
-*   Even if it converges, the Asymptotic properties of MLEs are no longer valid
-    since the sample size is not large enough.
+*   ~~Even if it converges, the Asymptotic properties of MLEs are no longer valid
+    since the sample size is not large enough.~~ (not true! ver ASSSASS)
 
     
-## Rethinking the problem
+## Repensando el problema
 
 \pause
 
-*   1st Step: Forget about MCMC-MLE estimation, take advantage of small
-    sample and use exact statistic for MLEs: \pause
+*   1st Step: Olvidemos el MCMC-MLE, aprovechemos el tamaño de la red para calcular
+    la funcion de log-verosimilitud y apliquemos MLE: \pause
     
     $$
     \Pr\left(\mathbf{Y}=\mathbf{y}|\theta, \mathcal{Y}\right) = \frac{\exp{\theta^{\mbox{T}}\mathbf{g}(\mathbf{y})}}{\kappa\left(\theta, \mathcal{Y}\right)},\quad\mathbf{y}\in\mathcal{Y}
     $$
     
-*   This solves the problem of been able to estimate a small ergm. \pause
+*   Esto resuelve el problam de *degenarcy* encontrado en ERGMs. \pause
 
-*   For this we started working on the `lergm` R package
-    (available at https://github.com/USCCANA/lergm):\pause
+*   Lo que ya esta implementado en el paquete `lergm`
+    (disponible en https://github.com/USCCANA/lergm):\pause
     
-    *   Not from scratch: uses some functions from statnet's `ergm`, in particular
-        `ergm-terms`.\pause
+    *   No desde 0: Utiliza algunas de las funciones ya incluidas en el paquete
+        de statnet, `ergm`, en particular
+        `ergm-terms`, `formula_ergm`.\pause
     
-    *   High performing (up to some point): Some components written in C++\pause
+    *   De alto rendimiento (hasta un punto): Algunos de sus componentes están
+        escritos en C++\pause
     
-    *   Very early stage of development...\pause we'll see if it is worth keep
-        working on it!
+    *   Estapa experimental...\pause ~~we'll see if it is worth keep
+        working on it!~~
 
-## Example 1
+## Ejemplo 1
 
-Let's start by trying to estimate an ERGM for a single graph of size 4
+Partamos por estimar un ERGM para una red con 4 nodos
 
 ```{r lergm1, echo=TRUE}
 library(lergm)
@@ -209,38 +238,29 @@ x <- sna::rgraph(4)
 lergm(x ~ edges + balance + mutual)
 ```
 
+A esto le llamo ERGMito (Gracias a George Barnett en la conferencia NASN2018!)
 
-----------
+## Pooled ERGMitos
 
-*   Cool, we are able to estimate ERGMs for little networks! (we actually call
-    them lergms), but...\pause
-    
-*   We still have issues regarding asymptotics.\pause
+*   Cuando estimamos el modelo de bloque diagonal, en cierta medida estamos asumiendo
+    que las redes son idependientes.\pause
 
-*   We propose to solve this by using a pooled version of the ERGM
-
-
-## Solution
-
-*   When estimating a block diagonal ERGM we were essentially assuming
-    independence across networks.\pause
-
-*   This means that we can actually do the same with exact statistics approach
-    to calculate a joint likelihood:\pause
+*   Esto implica que podemos hacer lo mismo con la función de verosimilitud, en
+    otras palabras, la verosimilitud conjunta es el producto de las independientes:\pause
     
     $$
     \Pr\left(\mathbf{Y}=\{\mathbf{y}_{\color{cyan} i}\}|\theta, \left\{\mathcal{Y}_{\color{cyan}i}\right\}\right) = {\color{cyan} \prod_i} \frac{\exp{\theta^{\mbox{T}}\mathbf{g}(\mathbf{y}_{\color{cyan} i})}}{\kappa_{\color{cyan} i}\left(\theta, \mathcal{Y}_{\color{cyan}i}\right)}
     $$
     \pause
     
-*   By estimating a pooled version of the ERGM we can recover the asymptotics 
-    of MLEs.\pause
+*   Estimando una version *pooled* del ERGMito mejoramos la precisión de nuestro
+    estimador.\pause
     
-*   We implemented this in the `lergm` package
+*   Esto también esta en el paquete `lergm`
     
-## Example 2
+## Ejemplo 2
 
-Suppose that we have 3 little graphs of sizes 4, 5, and 5:
+Supon que tenemos 3 grafos pequeños de tamaño 4, 5, y 5 respectivamente:
 
 ```{r lergm2, echo=TRUE}
 library(lergm)

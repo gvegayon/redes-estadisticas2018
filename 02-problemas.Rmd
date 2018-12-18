@@ -1,0 +1,75 @@
+---
+title: "Untitled"
+author: "George G. Vega Yon"
+date: "December 16, 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(ergm)
+data(samplk)
+```
+
+
+## 2.1 Maximum Pseudo-Likelihood Estimation
+
+a.  Sabemos que el ERGM que estima numero de links es equivalente a una regresión
+    logística. ¿Es lo mismo cierto para el caso en que se estiman número de 
+    lazos recíprocos?
+    
+b.  Muestra empíricamente que tu respuesta es correcta comparando un ERGM vs
+    una regresión logística utilizando la base de datos `samplk1` (del paquete
+    `ergm`).
+
+
+```{r}
+mod1a <- ergm(samplk1 ~ mutual)
+
+symm <- as.matrix(samplk1)
+symm <- symm * t(symm)
+idx   <- expand.grid(1:nrow(symm), 1:nrow(symm))
+idx   <- idx[idx[,2] > idx[,1],]
+symm[as.matrix(idx)] <- 0
+
+mod1b <- as.matrix(samplk1)
+mod1b[as.matrix(which(t(symm) == 1, arr.ind = TRUE))] <- NA
+symm <- as.integer(as.vector(symm == 1))
+diag(mod1b) <- NA
+mod1b <- as.vector(mod1b)
+mod1b <- glm(mod1b ~ 0+ symm, family = binomial(link = "logit"))
+mod1b
+mod1a
+```
+
+c.  En vez de el número de lazos mutuos, realiza el mismo análisis respecto del
+    número de lazos homofílicos en la variable `cloisterville` utilizando el
+    término `nodematch`.
+    
+```{r}
+# Estimando el modelo utilizando ergm
+(mod1c1 <- ergm(samplk1 ~ edges + nodematch("cloisterville")))
+
+# Ahora logit MLE
+mod1c2 <- as.matrix(samplk1)
+clois  <- get.vertex.attribute(samplk1, "cloisterville")
+idx    <- expand.grid(1:length(clois),1:length(clois))
+clois  <- as.integer(clois[idx[,1]] == clois[idx[,2]])
+
+diag(mod1c2) <- NA
+glm(as.vector(mod1c2) ~ 1 + clois , family=binomial(link="logit"))
+```
+    
+d.  
+
+## 2.2 ERGMito
+
+Implementa la función de verosimilitud de ERGM. Para esto puedes utilizar la
+función `ergm::ergm.allstats` o las funciones `ergm::summary_formula` y 
+`lergm::powerset` para grafos de hasta tamaño 4. Compara tu implementación con
+la disponible en `lergm::exact_loglik`.
+
+
