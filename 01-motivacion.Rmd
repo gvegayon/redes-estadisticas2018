@@ -1,8 +1,22 @@
 ---
-title: "Motivacion"
+title: "Estadística de Redes y Econometria Espacial"
 author: "George G. Vega Yon"
-date: "December 5, 2018"
-output: html_document
+date: "<img src=\"fig/cana_logo.png\" style=\"width:300px;\"><br>Department of Preventive Medicine<br>University of Southern California<br>20 de Diciembre, 2018"
+output:
+  revealjs::revealjs_presentation:
+    self_contained: true
+    transition: fade
+    theme: simple
+    reveal_options:
+      controls: false
+      slideNumber: true
+      margin: 0.05
+      width: 1024
+      height: 780
+    css: "slides.css"
+    slide_level: 2
+editor_options: 
+  chunk_output_type: console
 bibliography: bibliography.bib
 ---
 
@@ -10,37 +24,50 @@ bibliography: bibliography.bib
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+## Acerca de
+
+*   Iquiqueño
+
+*   Papá de 2, esposo de 1
+
+*   Quería ser músico, estudié comercial, salté a economía, y ahora estoy
+    en bioestadística...
+    
+*   Programando en R desde el +-2008
+
+*   Ahora, estudiante de doctorado en bioestadística en USC
+
 ## Estadistica Descriptiva vs Inferencia Estadistica
 
-Una distincion importante antes de partir:
+Una distinción importante antes de partir:
 
-*   En esta presentacion nos enfocaremos en modelos estadisticos de redes, y no
-    en estadistica descriptiva
+*   En esta presentación nos enfocaremos en modelos estadísticos de redes, y no
+    en estadística descriptiva
     
-*   Nada en contra de lo ultimo, mas aun, describir dinamicas de redes utilizando
-    estadistica descriptiva es muy importante
+*   Nada en contra de lo último, mas aun, describir dinámicas de redes utilizando
+    estadística descriptiva es muy importante
     
-*   A que me refiero con ED? Censo triadico, Cuenta de Network Motifs,
-    Distribucion de grado, etc.
+*   A que me refiero con ED? Censo triádico, Cuenta de Network Motifs,
+    Distribución de grado, etc.
     
-*   Una referencia muy buena para lo anterior es:
+*   Una referencia muy buena para lo anterior es: ... TBD
 
 ## El que
 
-*   En terminos generales, podemos encapsular el analisis estadistico de redes
+*   En términos generales, podemos encapsular el análisis estadístico de redes
     en dos(tres) grandes familias:
     
     a.  Estudio de las estructuras sociales(o no)
         
     b.  Estudio del comportamiento 
     
-    c.  Las dinamicas de comportamiento y su interaccion con las estructuras
+    c.  Las dinámicas de comportamiento y su interacción con las estructuras
     sociales
     
 *   El principal problema con estos objectos de estudio radica en el hecho de
     que las observaciones son, por construccion, no idependientes.
     
-## Cuando la inferencia estadistica se invalida
+## Cuando la inferencia estadística se inválida
 
 *   Usualmente, cuando analizamos una muestra de datos de una poblacion $(y, X)$,
     uno de los principales supuestos es IID
@@ -54,9 +81,9 @@ Una distincion importante antes de partir:
     
     Esto hace la inferencia "sencilla".
     
-*   Pero que pasa cuando los datos no son iid?
+*   Pero qué pasa cuando los datos no son iid?
 
-*   Esto es precisamente lo que los modelos de redes y econometria espacial resuelven
+*   Esto es precisamente lo que los modelos de redes y econometría espacial resuelven
     
 
 ## Notacion
@@ -105,19 +132,7 @@ Primero, algo de notacion
     el hecho de si $G$ puede ser considerado exogeno para la variable dependiente.
   
 
-## Review papers
-
-### Papers
-
-*   Para analisis estadístico de redes @Snijders2011 
-
-*   En el caso de econometría espacial, el paper @LeSage2008
-
-### Libros
-
-
-
-## Paquetes a utilizar
+## Paquetes a utilizar {style="font-size:80%"}
 
 ```{r echo=FALSE}
 descpkg <- function(pkg) {
@@ -131,7 +146,35 @@ descpkg <- function(pkg) {
 ```
 
 `r descpkg(c("ergm", "spdep", "Matrix", "sna", "igraph", "netdiffuseR", "sphet", "RSiena", "texreg", "coda"))`
-    
 
-## Bibliografía
+<!-- *    [`coda`](https://cran.r-project.org/package=coda): Output Analysis and Diagnostics for MCMC -->
+
+
+<!-- *    [`ergm`](https://cran.r-project.org/package=ergm): Fit, Simulate and Diagnose Exponential-Family Models for -->
+<!-- Networks -->
+
+
+<!-- *    [`igraph`](https://cran.r-project.org/package=igraph): Network Analysis and Visualization -->
+
+
+<!-- *    [`Matrix`](https://cran.r-project.org/package=Matrix): Sparse and Dense Matrix Classes and Methods -->
+
+
+<!-- *    [`netdiffuseR`](https://cran.r-project.org/package=netdiffuseR): Analysis of Diffusion and Contagion Processes on Networks -->
+
+
+<!-- *    [`RSiena`](https://cran.r-project.org/package=RSiena): Siena - Simulation Investigation for Empirical Network Analysis -->
+
+
+<!-- *    [`sna`](https://cran.r-project.org/package=sna): Tools for Social Network Analysis -->
+
+
+<!-- *    [`spdep`](https://cran.r-project.org/package=spdep): Spatial Dependence: Weighting Schemes, Statistics and Models -->
+
+
+<!-- *    [`sphet`](https://cran.r-project.org/package=sphet): Estimation of Spatial Autoregressive Models with and without -->
+<!-- Heteroscedasticity -->
+
+
+<!-- *    [`texreg`](https://cran.r-project.org/package=texreg): Conversion of R Regression Output to LaTeX or HTML Tables -->
 

@@ -1,5 +1,5 @@
 ---
-title: "Ultima parte"
+title: "Algunas aplicaciones"
 author: "George G. Vega Yon"
 date: "<img src=\"fig/cana_logo.png\" style=\"width:300px;\"><br>Department of Preventive Medicine<br>University of Southern California<br>20 de Diciembre, 2018"
 output:
@@ -25,31 +25,39 @@ bibliography: bibliography.bib
 Hemos revisado algunos de los modelos más importantes, pero aun así nos faltaron
 cosas por revisar!
 
-*   *Relational Event Models*
 
-*   *Egocentric ERGMs*
+-   GERGM: Generalized Exponential Random Graph Models (using weighted graphs, see @Desmarais2012).
 
-*   Métodos no-paramétricos para econometría espacial
+-   SERGMs: **Statistical** Exponential Random Graph Models, suitable for large graphs, uses sufficient statistics.
+[see @Chandrasekhar2012]
 
-*   *Network Matching*
+-   DyNAM: dynamic network actor models [see @Stadtfeld2017].
 
-*   *Multilevel ERGMs*
+-   REM: Relational Event Models [see @Butts2008], which are very similar to DyNAMs.
 
-*   *Statistical ERGMs (SERGMs)*
+-   ALAAM: Autologistic actor attribute models [see @Daraganova2013;@Kashima2013]
 
-## En la práctica 1
+-   Network Matching [@Aral2009]
 
+## WHO Framework Convention on Tobacco Control
 
-## En la práctica 2
+Modelo tobit $Y_t =\rho W Y_{t-1} + X\beta + \varepsilon$
 
-## Trabajo futuro
+![](fig/fctc.png){style="width:900px;"}
 
+## Social Mimicry: Test de permutación
+
+![](fig/biteme.svg){style="width:900px;"}
+
+## Social Mimicry: Test de permutación (cont.)
+
+![](fig/perm-dist.png){style="width:900px;"}
 
 
 ## {style="text-align:center!important;"}
 
 ```{r thanks, out.width="300px", fig.align='center', echo=FALSE}
-knitr::include_graphics("fig/speed.gif")
+knitr::include_graphics("fig/cana_logo.png")
 ```
 
 ### ¡Gracias!
@@ -60,3 +68,5 @@ knitr::include_graphics("fig/speed.gif")
 `r icon::fa("home")`  [ggvy.cl](https://ggvy.cl)<br><br>
 <text style="color:gray;font-size:80%">Presentation created with `r icon::fa("heart")` and [revealjs](https:cran.r-project.org/package=revealjs)</text>
 </p>
+
+## Bibliografía

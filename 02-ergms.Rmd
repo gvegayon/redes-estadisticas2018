@@ -24,7 +24,7 @@ bibliography: bibliography.bib
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## Un poco de historia
+## Un poco de historia {style="font-size:65%"}
 
 De @Hunter2006:
 
@@ -68,7 +68,10 @@ to ERGMs in the social networks literature.
     Donde $\theta\in\Omega\subset\mathbb{R}^q$ es el vactor de coeficientes, y 
     $\mathbf{g}(\mathbf{y})$ es un *q*-vector de estadísticos basados en el
     grafo $\mathbf{y}$.
-  
+
+##
+
+![](fig/ergm-terms.png){style="width:800px;"}
 
 ---
 
@@ -150,7 +153,7 @@ Más detalles en  @hoff2002.
 
 *   Revisaremos el último
 
----
+## {style="font-size: 80%"}
 
 ### MCMC-MLE
 
@@ -177,21 +180,17 @@ Para más detalles vea @lusher2012; @admiraal2006; @Snijders2002; @Wang2009
 da detalles respecto del algoritmo utilizado en PNet (Robbins-Monro en `RSiena`).
 @lusher2012 muestra de manera breve las diferencias entre `ergm` and `PNet`. 
 
------
+## Problemas
 
-*   *Degeneracy* @handcock2003; @Schweinberger2015
+<div align="center">
+![](fig/awful-chains.png){style="width:500px"}
+![](fig/ergm-fit.png){style="width:500px"}
 
+Example of problems encountered in the estimation process of ERGMs: No 
+convergence (left), and model degeneracy (right). @handcock2003; @Schweinberger2015
+for a discussion
+</div>
 
-## Context  (cont'd)
-
-\begin{figure}
-\centering
-\includegraphics[width = .65\linewidth]{plot-graph-4-1.pdf}
-\end{figure}
-
-\pause
-
-How can we go beyond descriptive statistics? 
 
 ## Redes pequeñas y ERGMs
 
@@ -203,7 +202,7 @@ Cuando intentamos estimar ERGMs en redes pequeñas: \pause
 *   Lo mismo ocurre cuando intentamos estimar un ERGM para una red pequeña, \pause
 
 *   ~~Even if it converges, the Asymptotic properties of MLEs are no longer valid
-    since the sample size is not large enough.~~ (not true! ver ASSSASS)
+    since the sample size is not large enough.~~ (not true!)
 
     
 ## Repensando el problema
@@ -277,5 +276,5 @@ x3 <- sna::rgraph(5)
 lergm(list(x1, x2, x3) ~ edges + balance + mutual)
 ```
 
-## Problemas
+## Bibliografía
 

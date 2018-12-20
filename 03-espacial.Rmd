@@ -287,3 +287,4 @@ library(spdep)
 texreg::htmlreg(list(ans0, ans1, ans2, ans3), doctype = FALSE)
 ```
 
+## Bibliografía
