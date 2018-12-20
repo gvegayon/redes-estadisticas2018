@@ -32,7 +32,7 @@ estos modelos.
     ([presentacion](https://htmlpreview.github.io/?https://raw.githubusercontent.com/gvegayon/redes-estadisticas2018/master/03-espacial.html))
 
   - Parte 4: Aplicaciones
-    ([presentacion](https://htmlpreview.github.io/?https://raw.githubusercontent.com/gvegayon/redes-estadisticas2018/master/04-fin.html))
+    ([presentacion](https://htmlpreview.github.io/?https://raw.githubusercontent.com/gvegayon/redes-estadisticas2018/master/04-applicaciones.html))
 
 ## Bibliografía
 
@@ -175,6 +175,15 @@ Social Category Learning in Social Networks.” *Social Networks* 35 (4):
 
 </div>
 
+<div id="ref-Kelejian2010">
+
+Kelejian, Harry H., and Ingmar R. Prucha. 2010. “Specification and
+estimation of spatial autoregressive models with autoregressive and
+heteroskedastic disturbances.” *Journal of Econometrics* 157 (1): 53–67.
+<https://doi.org/10.1016/j.jeconom.2009.10.025>.
+
+</div>
+
 <div id="ref-king2016propensity">
 
 King, Gary, and Richard Nielsen. 2016. “Why Propensity Scores Should Not
@@ -223,10 +232,27 @@ Applications*. Cambridge University Press.
 
 </div>
 
+<div id="ref-Milo2004">
+
+Milo, Ron, Shalev Itzkovitz, Nadav Kashtan, Reuven Levitt, Shai
+Shen-Orr, Inbal Ayzenshtat, Michal Sheffer, and Uri Alon. 2004.
+“Superfamilies of Evolved and Designed Networks.” *Science* 303
+(5663): 1538–42. <https://doi.org/10.1126/science.1089167>.
+
+</div>
+
 <div id="ref-Moran1950">
 
 Moran, P. A. P. 1950. “Notes on Continuous Stochastic Phenomena.”
 *Biometrika* 37 (1/2): 17. <https://doi.org/10.2307/2332142>.
+
+</div>
+
+<div id="ref-Piras2010">
+
+Piras, Gianfranco. 2010. “sphet: Spatial Models with Heteroskedastic
+Innovations in R.” *Journal of Statistical Software* 35 (4): 1–21.
+<https://doi.org/10.1016/j.landurbplan.2011.01.013>.
 
 </div>
 
