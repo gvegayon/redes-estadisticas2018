@@ -1,17 +1,29 @@
 ---
-title: "02-redes"
+title: "Comportamiento en el contexto de Redes"
 author: "George G. Vega Yon"
-date: "December 9, 2018"
-output: html_document
+date: "<img src=\"fig/cana_logo.png\" style=\"width:300px;\"><br>Department of Preventive Medicine<br>University of Southern California<br>20 de Diciembre, 2018"
+output:
+  revealjs::revealjs_presentation:
+    self_contained: true
+    transition: fade
+    theme: simple
+    reveal_options:
+      controls: false
+      slideNumber: true
+      margin: 0.05
+      width: 1024
+      height: 780
+    css: "slides.css"
+    slide_level: 2
+editor_options: 
+  chunk_output_type: console
 bibliography: bibliography.bib
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
 library(Matrix)
 ```
-
-##
 
 Antes de partir... retomaremos un modelo que nos faltó revisar
 
@@ -146,17 +158,30 @@ Los modelos SAR:
 ## ¿Qué Matriz?
 
 *   La pregunta "Cual de todas las posibles matrices debo utilizar" es más
-    común de lo que debería. 
+    común de lo que debería, en particular:
     
-*   
-
-*   Notice that $(I_n - \rho W)^{-1} = I_n + \rho W + \rho^2 W^2 + \dots$, hence
-    there autocorrelation does consider effects over neighbors farther than 1 step
-    away, which makes the specification of $W$ no critical. [see @LeSage2014]
+    1.  Cuántos vecinos,
+    2.  Qué forma funcional,
+    3.  etc.
+    
+    En @LeSage2014 argumenta que en princiopio no es tan relevante.
+    
+*   Una propiedad importante e interesante es que $(I_n - \rho W)^{-1}$
+    es que tiene una descomposición que implica que los efectos van más allá de
+    los vecinos directos: $I_n + \rho W + \rho^2 W^2 + \dots$
     
 ## Resumen
 
-![](fig/spillover-effects.png){style="width:600px;"}
+![](fig/sar-summary-elhorst.svg){style="width:900px;"}
+
+Fuente: @elhorst2013
+
+
+## Efectos Marginales
+
+![](fig/spillover-effects.png){style="width:800px;"}
+
+Fuente: @elhorst2013
 
 ## Ejemplo con datos simulados
 
@@ -192,7 +217,11 @@ rho <- .5
 X   <- matrix(runif(n*k), ncol=k)
 b   <- cbind(runif(k + 1L, -1, 1))
 eps <- cbind(rnorm(n))
+```
 
+---
+
+```{r ejemplo1-red}
 # Simulando matriz espacial, utilizaremos el paquete igraph para esto
 library(igraph)
 library(Matrix) # Para acceder al dgCMatrix en la funcion rowSums
@@ -205,14 +234,13 @@ W   <- as_adj(net)
 # Normalizando matriz y visualizando
 W   <- W/rowSums(W)
 image(W)
-
-# Generando variable dependiente
-Y <- as.matrix(solve(diag(n) - rho*W) %*% (cbind(1, X) %*% b + eps))
 ```
 
+---
+
 ```{r ejemplo1-estimacion-moran}
-# Estimacion
-library(spdep)
+# Generando variable dependiente
+Y <- as.matrix(solve(diag(n) - rho*W) %*% (cbind(1, X) %*% b + eps))
 
 # La I de moran
 netdiffuseR::moran(Y, W)
@@ -226,31 +254,36 @@ netdiffuseR::moran(Y, W)
 # )
 ```
 
+---
+
 ```{r ejemplo1-estimacion-omit}
+library(spdep) # Para el test de moran
 # Naive OLS
 ans0 <- lm(Y ~ X)
 lm.morantest(ans0, listw = mat2listw(W)) # netdiffuseR::moran(ans0$residuals, W)
 ```
 
+---
+
 ```{r ejemplo1-estimacion-incluir}
 # Modelos de regresion
 WY <- as.matrix(W %*% Y)
 ans1 <- lm(Y ~ WY + X) # Coeficiente sesgado
-
-# Modelos SAR
-ans2 <- lagsarlm(Y ~ X, listw = mat2listw(W)) # Especificacion correcta
-ans3 <- lagsarlm(Y ~ X, listw = mat2listw(W), Durbin = ~ X[,-1]) # Especificacion incorrecta
+ans1
 ```
+
+## {style="font-size:70%"}
+
+```{r ejemplo1-estimacion-sar}
+# Modelos SAR
+library(spdep)
+(ans2 <- lagsarlm(Y ~ X, listw = mat2listw(W))) # Especificacion correcta
+(ans3 <- lagsarlm(Y ~ X, listw = mat2listw(W), Durbin = ~ X[,-1])) # Especificacion incorrecta
+```
+
+## {style="font-size:70%"}
 
 ```{r ejemplo1-tabla, results='asis'}
-# Comparando coeficientes
-library(texreg)
-htmlreg(list(
- ans0, ans1, ans2, ans3 
-), doctype = FALSE)
+texreg::htmlreg(list(ans0, ans1, ans2, ans3), doctype = FALSE)
 ```
 
-
-
-
-## Referencias

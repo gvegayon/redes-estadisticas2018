@@ -1,7 +1,7 @@
 ---
 title: "Modelos de Grafos Exponenciales (ERGMs)"
 author: "George G. Vega Yon"
-date: "Department of Preventive Medicine<br>University of Southern California<br>20 de Diciembre, 2018"
+date: "<img src=\"fig/cana_logo.png\" style=\"width:300px;\"><br>Department of Preventive Medicine<br>University of Southern California<br>20 de Diciembre, 2018"
 output:
   revealjs::revealjs_presentation:
     self_contained: true
@@ -277,6 +277,5 @@ x3 <- sna::rgraph(5)
 lergm(list(x1, x2, x3) ~ edges + balance + mutual)
 ```
 
-
-# Referencias
+## Problemas
 

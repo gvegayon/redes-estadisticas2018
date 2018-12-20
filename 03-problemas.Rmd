@@ -1,8 +1,22 @@
 ---
-title: "02-redes"
+title: "Comportamiento en el contexto de Redes"
 author: "George G. Vega Yon"
-date: "December 9, 2018"
-output: html_document
+date: "<img src=\"fig/cana_logo.png\" style=\"width:300px;\"><br>Department of Preventive Medicine<br>University of Southern California<br>20 de Diciembre, 2018"
+output:
+  revealjs::revealjs_presentation:
+    self_contained: true
+    transition: fade
+    theme: simple
+    reveal_options:
+      controls: false
+      slideNumber: true
+      margin: 0.05
+      width: 1024
+      height: 780
+    css: "slides.css"
+    slide_level: 2
+editor_options: 
+  chunk_output_type: console
 bibliography: bibliography.bib
 ---
 
