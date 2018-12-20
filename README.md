@@ -1,3 +1,7 @@
+---
+bibliography: bibliography.bib
+nocite: "@*"
+---
 
 # Redes y Econometria Espacial con R
 
@@ -62,3 +66,4 @@ a.  Spatial Autoregresive Models: Descripcion, supuestos, cuando si/no,
 b.  Familia de modelos: Heterocedasticiad, Errores autocorrelacionados, IV sol
     y metodos de estimacion, SARAR, SAR Probit/Logit/MLogit
 
+## Bibliografía

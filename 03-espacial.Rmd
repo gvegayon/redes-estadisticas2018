@@ -11,13 +11,53 @@ knitr::opts_chunk$set(echo = TRUE)
 library(Matrix)
 ```
 
-## Notación y conceptos fundamentales
+##
 
-*   Matriz dispersa
+Antes de partir... retomaremos un modelo que nos faltó revisar
 
-*   Matriz normalizada
+## Stochastic Actor Oriented Models (SOAM, aka Siena)
 
-*   
+Los modelos Siena:
+
+*   Modelan la co-evolución de la red y el comportamiento.
+
+*   A diferencia de los ERGMs (*cross-section*), Siena modela datos dinámicos. 
+    Más aun, ponen el foco en el individuo.
+    
+*   El modelo asume que los cambios en la red o comportamiento ocurren de manera
+    continua (no discreta)--como ocurre con un proceso poisson--y uno a la vez
+    desde el punto de vista del individuo.
+    
+*   Estos corresponden a los denominados *micro-step*, y hacen que el modelamiento
+    sea en general más sencillo (nos enfocamos en un cambio a la vez)
+    
+---
+
+*   Dos funciones principales componen el modelo: $f_i^G(g) = s_{Gi}(g, y)\theta^G$,
+    utilidad que el individuo $i$ obtiene con el estado del grafo $g$, y
+    $f_i^Y(y) = s_{Yi}(g, y)\theta^Y$, utilidad que el mismo individuo obtiene
+    con el estado de la variable $y$.
+    
+*   De manera similar a los ERGMs, las funciones objetivo son:
+    
+    $$
+    \frac{\exp f_i^G(g)}{\sum_{g'\in\mathcal{G}}\exp f_i^G(g')}, \quad
+    \frac{\exp f_i^Y(y)}{\sum_{y'\in\mathcal{Y}}\exp f_i^Y(y')}
+    $$
+
+Sección 5 *Model specification* de *Manual for RSiena* [@ripley2011] para ver
+una descripción asociada a RSiena, y @Snijders2010; @Steglich2010 para una introducción más
+detallada (no tan formal) del modelo.
+
+
+---
+
+![](fig/steglich2010-table2.svg){style="width:900px;"}
+
+---
+
+![](fig/steglich2010-table3.svg){style="width:900px;"}
+
 
 ## Autocorrelación
 
@@ -69,14 +109,17 @@ image(as(y, "dgCMatrix"))
 ```
 
 
-## Spatial Autocorrelation Models (SAR a.k.a. Network Auto-correlation Models) {.smaller}
+## Modelos de Autocorrelacion Espacial/*Spatial Autocorrelation Models* (SAR a.k.a. Network Auto-correlation Models) {.smaller}
 
-*   Spatial Auto-correlation Models are mostly applied in the context of spatial
-    statistics and econometrics.
+Los modelos SAR:
+
+*   Principalmente utilizados en el contexto de la estadística y la econometria espacial.
     
-*   A wide family of models, you can find SA equivalents to Probit, Logit, MLogit, etc.
+*   Una amplia gama de modelos. Es posible encontrar los SAR equivalentes a Probit, Logit, MLogit, etc.
     
-*   The SAR model has interdependence built-in using a Multivariate Normal Distribution:
+*   A diferencia del típico modelo de regresión lineal, el modelo SAR tiene la 
+    endogeneidad como parte de su especificación utilizando una distribución
+    normal multivariada (MNV):
     
     $$
     \begin{align}
@@ -84,22 +127,23 @@ image(as(y, "dgCMatrix"))
     \end{align}
     $$
 
-    Where $\rho\in[-1,1]$ and $W=\{w_{ij}\}$, with $\sum_j w_{ij} = 1$
+    Donde $\rho\in[-1,1]$ and $W=\{w_{ij}\}$, with $\sum_j w_{ij} = 1$
 
 ## Spatial Autocorrelation Models (SAR) (cont.) {.smaller}
 
-*   This is more close than we might think, since the $i$-th element of $Wy$ can be
-    expressed as $\frac{\sum_j a_{ij} y_j}{\sum_j a_{ij}}$, what we usually
-    define as exposure in networks, where $a_{ij}$ is an element of the $\{0,1\}$-adjacency
-    matrix .
+*   Este tipo de modelos está más cerca de lo que parece, pues el $i$-ésimo 
+    elemento de $Wy$ puede ser expresado como $\frac{\sum_j a_{ij} y_j}{\sum_j a_{ij}}$,
+    que usualmente se denomina como "exposición" en la literatura de redes sociales,
+    con $a_{ij}$ un elemento de la matriz adjacente.
     
+*   Estos modelos asumen que $W$ es exógeno, en otras palabras, si es que tus
+    datos presentan algo como homofilia, entonces este modelo estará sesgado.
     
-*   These models assume that $W$ is exogenous,
-    in other words, if there's homophily you won't be able to use it!
-    
-*   But there are solutions to this problem (using instrumental variables).
+*   Pero al igual que muchos otros en econometría, existen soluciones para problemas
+    de endogeneida (variables instrumentales), he incluso estimadores de varianza
+    robusta corrigiendo por heterocedasticidad..
 
-## Qué Matriz?
+## ¿Qué Matriz?
 
 *   La pregunta "Cual de todas las posibles matrices debo utilizar" es más
     común de lo que debería. 
@@ -109,6 +153,10 @@ image(as(y, "dgCMatrix"))
 *   Notice that $(I_n - \rho W)^{-1} = I_n + \rho W + \rho^2 W^2 + \dots$, hence
     there autocorrelation does consider effects over neighbors farther than 1 step
     away, which makes the specification of $W$ no critical. [see @LeSage2014]
+    
+## Resumen
+
+![](fig/spillover-effects.png){style="width:600px;"}
 
 ## Ejemplo con datos simulados
 
@@ -203,11 +251,6 @@ htmlreg(list(
 ```
 
 
-##
-
-Sección 5 *Model specification* de *Manual for RSiena* [@ripley2011] para ver
-una descripción asociada a RSiena, y @Snijders2010; @Steglich2010 para una introducción más
-detallada (no tan formal) del modelo.
 
 
 ## Referencias

@@ -1,8 +1,22 @@
 ---
-title: "02-redes"
+title: "Modelos de Grafos Exponenciales (ERGMs)"
 author: "George G. Vega Yon"
-date: "December 9, 2018"
-output: html_document
+date: "Department of Preventive Medicine<br>University of Southern California<br>20 de Diciembre, 2018"
+output:
+  revealjs::revealjs_presentation:
+    self_contained: true
+    transition: fade
+    theme: simple
+    reveal_options:
+      controls: false
+      slideNumber: true
+      margin: 0.05
+      width: 1024
+      height: 780
+    css: "slides.css"
+    slide_level: 2
+editor_options: 
+  chunk_output_type: console
 bibliography: bibliography.bib
 ---
 
@@ -42,9 +56,6 @@ to ERGMs in the social networks literature.
 
 *   Por ejemplo: \# de triadas, \# de diadas homofílicas, \# de k-estrellas, etc.
 
-TABLA VA ACA
-
-
 *   En este caso, $\mathbf{Y} = \mathbf{G}$
 
 *   En general, la distribución de $\mathbf{Y}$ puede ser paremetrizada como sigue:
@@ -57,12 +68,11 @@ TABLA VA ACA
     Donde $\theta\in\Omega\subset\mathbb{R}^q$ es el vactor de coeficientes, y 
     $\mathbf{g}(\mathbf{y})$ es un *q*-vector de estadísticos basados en el
     grafo $\mathbf{y}$.
+  
 
 ---
 
 *   *Markov dependence* lleva a *Markov Graphs* [@Frank1986].
-
-*   Intro a ERGMs [@ROBINS2007a; @ROBINS2007b].
 
 *   El modelo (1) puede ser extendido para incluir covariables (*features*) 
     a nivel nodal o de lazo reemplazando $\mathbf{g}(\mathbf{y})$ por
@@ -80,30 +90,22 @@ TABLA VA ACA
 
 *   Aun restringiendo el conjunto $\mathcal{Y}$ a las redes de tamaño $n$,
     el numero de elementos de $\mathcal{Y}$ hace la estimación de estos modelos
-    difícil [@Hunter2008].
+    difícil [@Hunter2008]. $N = 2^{n(n-1)}$
     
-    $$
-    N = 2^{n(n-1)}
-    $$
-    
-## ERGMs: Principales supuestos
-
-*   Modelo generador de datos
-
-*   Dependencia de diadas
-
-*   Red completa
-
-*   Lado práctico: Red relativemente mediana (par de miles de nodos, no más que eso)
-
+*   Una buena intro @ROBINS2007a; @ROBINS2007b.
 
 ## Separable Exponential Random Graph Models (a.k.a. TERGMs)
 
--   A discrete time model.
+Los ERGMs Separables:
 
--   Estimates a set of parameters $\theta = \{\theta^-, \theta^+\}$ that capture the transition dynamics from $\mathbf{Y}^{t-1}$ to $\mathbf{Y}^{t}$.
+-   Modelos de tiempo discreto.
 
--   Assuming that $(\mathbf{Y}^+\perp\mathbf{Y}^-) | \mathbf{Y}^{t-1}$ (the model **dynamic model** is separable), we estimate two models:
+-   Estima un set de parametros $\theta = \{\theta^-, \theta^+\}$ que capturan
+    las dinámicas de transición de $\mathbf{Y}^{t-1}$ a $\mathbf{Y}^{t}$.
+
+-   Asumiendo que $(\mathbf{Y}^+\perp\mathbf{Y}^-) | \mathbf{Y}^{t-1}$ (el modelo
+    dinámico es separable), se estima una probabilidad conjunta con las siguientes
+    ecuaciones::
     $$
     \begin{align}
     \Pr\left(\mathbf{Y}^+ = \mathbf{y}^+|\mathbf{Y}^{t-1} = \mathbf{y}^{t-1};\theta^+\right),\quad \mathbf{y}^+\in\mathcal{Y}^+(\mathbf{y}^{t-1})\\
@@ -111,26 +113,30 @@ TABLA VA ACA
     \end{align}
     $$
 
--   So we end up estimating two ERGMs.
+-   i.e. 2 ERGMs.
+
+Más detalles en @Krivitsky2014.
     
 ## Latent Network Models
 
--   Social networks are a function of a latent space (literally, xyz for example) $\mathbf{Z}$.
+Los modelos de Redes Latentes (*Latent Networks*):
 
--   Individuals who are closer to each other within $\mathbf{Z}$ have a higher
-chance of been connected.
+-   Las redes sociales son función de un espacio latente (no observado) $\mathbf{Z}$.
 
--   Besides of estimating the typical set of parameters $\theta$, a key part of this model is find $\mathbf{Z}$.
+-   Individuos cercanos dentro de $\mathbf{Z}$ tienen una probabilida mayor de
+    estar conectados.
 
--   Similar to TERGMs, under the conditional independence assumption we can estimate:
+-   Además de estimar un set de parametros $\theta$, la parte fundamental de este
+    modelo es encontrar dicho espacio latente, $\mathbf{Z}$.
+
+-   Similar a los TERGMs, bajo el supuesto de independencia condicional podemos
+    estimar:
 
 $$
 \Pr\left(\mathbf{Y} =\mathbf{y}|\mathbf{X} = \mathbf{x}, \mathbf{Z}, \theta\right) = \prod_{i\neq j}\Pr\left(y_{ij}|z_i, z_j, x_{ij},\theta\right)
 $$
 
-See @hoff2002
-
-
+Más detalles en  @hoff2002.
 
 ## ERGMs: Estimación
 
