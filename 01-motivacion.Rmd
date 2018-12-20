@@ -3,6 +3,7 @@ title: "Motivacion"
 author: "George G. Vega Yon"
 date: "December 5, 2018"
 output: html_document
+bibliography: bibliography.bib
 ---
 
 ```{r setup, include=FALSE}
@@ -102,5 +103,35 @@ Primero, algo de notacion
     
 *   Nuevamente, la validez del uso de estos modelos depende fundamentalmente en
     el hecho de si $G$ puede ser considerado exogeno para la variable dependiente.
+  
+
+## Review papers
+
+### Papers
+
+*   Para analisis estadístico de redes @Snijders2011 
+
+*   En el caso de econometría espacial, el paper @LeSage2008
+
+### Libros
+
+
+
+## Paquetes a utilizar
+
+```{r echo=FALSE}
+descpkg <- function(pkg) {
+  
+  if (length(pkg) > 1)
+    return(sapply(sort(pkg), descpkg))
+  
+  with(packageDescription(pkg), sprintf("\n\n*    [`%s`](https://cran.r-project.org/package=%s): %s\n", Package, Package, Title))
+  
+}
+```
+
+`r descpkg(c("ergm", "spdep", "Matrix", "sna", "igraph", "netdiffuseR", "sphet", "RSiena", "texreg", "coda"))`
     
-    
+
+## Bibliografía
+

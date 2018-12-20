@@ -8,6 +8,7 @@ bibliography: bibliography.bib
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+library(Matrix)
 ```
 
 ## Notación y conceptos fundamentales
@@ -28,6 +29,45 @@ knitr::opts_chunk$set(echo = TRUE)
     $$
     
     Donde $W$ es una matriz normalizada (*row-normalized*) 
+
+## Autocorrelación (Moran -1)
+
+```{r moran-ej-neg, warning=FALSE, echo=FALSE, fig.align='center', fig.cap="Ejemplo de I de Moran con valor cercano o igual a 1. La matriz fue graficada utilizando el metodo dgCMatrix de la funcion image."}
+# Alta correlacion negativa
+m <- as.matrix(expand.grid(1:5, 1:5))
+m <- as.matrix(dist(m))
+m[m >= sqrt(2)] <- 0
+y <- matrix(c(0,1), nrow=5, ncol=5)
+str(netdiffuseR::moran(y, m))
+image(as(y, "dgCMatrix"))
+```
+
+## Autocorrelación (Moran cercano a 1)
+
+```{r moran-ej-pos, warning=FALSE, echo=FALSE, fig.align='center', fig.cap="Ejemplo de I de Moran con valor cercano o igual a 1. La matriz fue graficada utilizando el metodo dgCMatrix de la funcion image."}
+# Alta correlacion positiva
+m <- as.matrix(expand.grid(1:4, 1:4))
+m <- as.matrix(dist(m))
+m[m >= sqrt(2)] <- 0
+y <- matrix(c(1,1,0,0), nrow=4, ncol=4, byrow = TRUE)
+str(netdiffuseR::moran(as.vector(y), m))
+image(as(y, "dgCMatrix"))
+
+```
+
+## Autocorrelación (Moran cercano a 0)
+
+```{r moran-ej-0, warning=FALSE, echo=FALSE, fig.align='center', fig.cap="Ejemplo de I de Moran con valor cercano o igual a 0. La matriz fue graficada utilizando el metodo dgCMatrix de la funcion image."}
+# Correlacion cercana a 0
+set.seed(1872)
+m <- as.matrix(expand.grid(1:20, 1:20))
+m <- as.matrix(dist(m))
+m[m >= sqrt(2)] <- 0
+y <- matrix(rbinom(400, size = 1, .5), nrow=20)
+str(netdiffuseR::moran(as.vector(y), m))
+image(as(y, "dgCMatrix"))
+```
+
 
 ## Spatial Autocorrelation Models (SAR a.k.a. Network Auto-correlation Models) {.smaller}
 
@@ -68,7 +108,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 *   Notice that $(I_n - \rho W)^{-1} = I_n + \rho W + \rho^2 W^2 + \dots$, hence
     there autocorrelation does consider effects over neighbors farther than 1 step
-    away, which makes the specification of $W$ no critical. [see @LeSage2008]
+    away, which makes the specification of $W$ no critical. [see @LeSage2014]
 
 ## Ejemplo con datos simulados
 
@@ -89,10 +129,11 @@ knitr::opts_chunk$set(echo = TRUE)
         
 ## Ejemplo con datos simulados (cont.)
 
+Para más información sobre los objetos `nb` ver la sección *9.2 Spatial Neighbours*
+del libro *Applied spatial data analysis with R* [@bivand2008].
 
 
 ```{r ejemplo1-dgp}
-
 # Parametros para la simulacion
 set.seed(1151)
 n   <- 500L
@@ -100,7 +141,7 @@ k   <- 2L
 rho <- .5
 
 # Simulando covariables y coeficientes
-X   <- cbind(1, matrix(runif(n*k), ncol=k))
+X   <- matrix(runif(n*k), ncol=k)
 b   <- cbind(runif(k + 1L, -1, 1))
 eps <- cbind(rnorm(n))
 
@@ -118,10 +159,10 @@ W   <- W/rowSums(W)
 image(W)
 
 # Generando variable dependiente
-Y <- as.matrix(solve(diag(n) - rho*W) %*% (X %*% b + eps))
+Y <- as.matrix(solve(diag(n) - rho*W) %*% (cbind(1, X) %*% b + eps))
 ```
 
-```{r ejemplo1-estimacion}
+```{r ejemplo1-estimacion-moran}
 # Estimacion
 library(spdep)
 
@@ -135,27 +176,38 @@ netdiffuseR::moran(Y, W)
 #   netdiffuseR::moran(Y, W), # Para matrices realmente grandes
 #   moran.test(Y, Wlist, alternative = "two.sided")  
 # )
+```
 
-
+```{r ejemplo1-estimacion-omit}
 # Naive OLS
-exposure <- as.matrix(W %*% Y)
+ans0 <- lm(Y ~ X)
+lm.morantest(ans0, listw = mat2listw(W)) # netdiffuseR::moran(ans0$residuals, W)
+```
 
-summary(ans0 <- lm(Y ~ X[,-1]))
-lm.morantest(ans0, listw = mat2listw(W))
-
-netdiffuseR::moran(ans0$residuals, W)
-
+```{r ejemplo1-estimacion-incluir}
 # Modelos de regresion
-ans1 <- lm(Y ~ exposure + X[,-1])
-ans2 <- lagsarlm(Y ~ X[,-1], listw = mat2listw(W))
-ans3 <- lagsarlm(Y ~ 0 + X, listw = mat2listw(W), Durbin = ~ X[,-1])
+WY <- as.matrix(W %*% Y)
+ans1 <- lm(Y ~ WY + X) # Coeficiente sesgado
 
-coef(ans0)
-coef(ans1)
-coef(ans2)
+# Modelos SAR
+ans2 <- lagsarlm(Y ~ X, listw = mat2listw(W)) # Especificacion correcta
+ans3 <- lagsarlm(Y ~ X, listw = mat2listw(W), Durbin = ~ X[,-1]) # Especificacion incorrecta
+```
+
+```{r ejemplo1-tabla, results='asis'}
+# Comparando coeficientes
+library(texreg)
+htmlreg(list(
+ ans0, ans1, ans2, ans3 
+), doctype = FALSE)
 ```
 
 
+##
+
+Sección 5 *Model specification* de *Manual for RSiena* [@ripley2011] para ver
+una descripción asociada a RSiena, y @Snijders2010; @Steglich2010 para una introducción más
+detallada (no tan formal) del modelo.
 
 
 ## Referencias

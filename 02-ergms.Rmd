@@ -31,7 +31,6 @@ are dependent, conditional on the rest of the graph, only when they share a node
 
 *   Frank (1991) mentioned the application of model (1.1) to social networks in its full generality.
 
-
 *   This was pursued by Wasserman and Pattison (1996). In honor of Holland and Leinhardt’s
 p1 model, they referred to model (1.1) as p∗ (p-star), a name that has been widely applied
 to ERGMs in the social networks literature.
