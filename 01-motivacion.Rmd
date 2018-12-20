@@ -1,5 +1,5 @@
 ---
-title: "Estadística de Redes y Econometria Espacial"
+title: "Estadística de Redes y Econometria Espacial (con R)"
 author: "George G. Vega Yon"
 date: "<img src=\"fig/cana_logo.png\" style=\"width:300px;\"><br>Department of Preventive Medicine<br>University of Southern California<br>20 de Diciembre, 2018"
 output:
@@ -146,35 +146,4 @@ descpkg <- function(pkg) {
 ```
 
 `r descpkg(c("ergm", "spdep", "Matrix", "sna", "igraph", "netdiffuseR", "sphet", "RSiena", "texreg", "coda"))`
-
-<!-- *    [`coda`](https://cran.r-project.org/package=coda): Output Analysis and Diagnostics for MCMC -->
-
-
-<!-- *    [`ergm`](https://cran.r-project.org/package=ergm): Fit, Simulate and Diagnose Exponential-Family Models for -->
-<!-- Networks -->
-
-
-<!-- *    [`igraph`](https://cran.r-project.org/package=igraph): Network Analysis and Visualization -->
-
-
-<!-- *    [`Matrix`](https://cran.r-project.org/package=Matrix): Sparse and Dense Matrix Classes and Methods -->
-
-
-<!-- *    [`netdiffuseR`](https://cran.r-project.org/package=netdiffuseR): Analysis of Diffusion and Contagion Processes on Networks -->
-
-
-<!-- *    [`RSiena`](https://cran.r-project.org/package=RSiena): Siena - Simulation Investigation for Empirical Network Analysis -->
-
-
-<!-- *    [`sna`](https://cran.r-project.org/package=sna): Tools for Social Network Analysis -->
-
-
-<!-- *    [`spdep`](https://cran.r-project.org/package=spdep): Spatial Dependence: Weighting Schemes, Statistics and Models -->
-
-
-<!-- *    [`sphet`](https://cran.r-project.org/package=sphet): Estimation of Spatial Autoregressive Models with and without -->
-<!-- Heteroscedasticity -->
-
-
-<!-- *    [`texreg`](https://cran.r-project.org/package=texreg): Conversion of R Regression Output to LaTeX or HTML Tables -->
 

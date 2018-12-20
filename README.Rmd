@@ -1,0 +1,40 @@
+---
+bibliography: bibliography.bib
+output: github_document
+nocite: "@*"
+---
+
+# Redes y Econometria Espacial con R
+
+Las redes están en todas partes. Desde los sistemas artificiales hasta los
+naturales, las redes son un componente fundamental para su entendimiento, y
+hacer ciencia sin "ciencia de redes" hoy resulta en un ejercicio incompleto.
+
+En este taller le daremos una mirada general a las herramientas y métodos
+que han sido desarrollados (tanto desde la estadística como la econometría) para
+el análsis de las redes--con foco en las redes sociales--y sus efectos sobre,
+por ejemplo, el comportamiento humano.
+
+Si bien parte del taller contempla el uso de R, este concentrará una parte
+importante del tiempo en el desarrollo de conceptos de modelamiento estadístico
+fundamentales asociados a los modelos que revisaremos a lo largo del taller.
+Al finalizar el taller se espera que los asistentes hayan adquirido la teoría
+estadística/econométrica e intuición elemental de los modelos revisados, y
+sepan que paquetes de R y referencias bibliográficas deberán explorar
+para entender más sobre estos modelos.
+
+# Contenidos
+
+-   Parte 1: Intro ([presentacion](https://htmlpreview.github.io/?https://raw.githubusercontent.com/gvegayon/redes-estadisticas2018/master/01-motivacion.html))
+
+-   Parte 2: Exponential Random Graph Models ([presentacion](https://htmlpreview.github.io/?https://raw.githubusercontent.com/gvegayon/redes-estadisticas2018/master/02-ergms.html)-[problemas](https://htmlpreview.github.io/?https://raw.githubusercontent.com/gvegayon/redes-estadisticas2018/master/02-problemas.html))
+
+-   Parte 3: Modelos espaciales y SOAM ([presentacion](https://htmlpreview.github.io/?https://raw.githubusercontent.com/gvegayon/redes-estadisticas2018/master/03-espacial.html))
+
+* Parte 4: Aplicaciones ([presentacion](https://htmlpreview.github.io/?https://raw.githubusercontent.com/gvegayon/redes-estadisticas2018/master/04-fin.html))
+
+
+## Bibliografía
+
+Artítulos y libros citados:
+

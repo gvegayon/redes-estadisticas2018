@@ -140,6 +140,8 @@ Los modelos SAR:
     $$
 
     Donde $\rho\in[-1,1]$ and $W=\{w_{ij}\}$, with $\sum_j w_{ij} = 1$
+    
+*   Una intro buena es @LeSage2008
 
 ## Spatial Autocorrelation Models (SAR) (cont.) {.smaller}
 
@@ -153,7 +155,7 @@ Los modelos SAR:
     
 *   Pero al igual que muchos otros en econometría, existen soluciones para problemas
     de endogeneida (variables instrumentales), he incluso estimadores de varianza
-    robusta corrigiendo por heterocedasticidad..
+    robusta corrigiendo por heterocedasticidad [@Kelejian2010; @Piras2010].
 
 ## ¿Qué Matriz?
 
@@ -287,4 +289,4 @@ library(spdep)
 texreg::htmlreg(list(ans0, ans1, ans2, ans3), doctype = FALSE)
 ```
 
-## Bibliografía
+## Bibliografía {style="font-size:60%"}

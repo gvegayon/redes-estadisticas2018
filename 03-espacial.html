@@ -1978,6 +1978,7 @@ Y = &amp; \alpha + \rho W Y + X\beta + \varepsilon,\quad\varepsilon\sim MVN(0,\s
 \end{align}
 \]</span></p>
 <p>Donde <span class="math inline">\(\rho\in[-1,1]\)</span> and <span class="math inline">\(W=\{w_{ij}\}\)</span>, with <span class="math inline">\(\sum_j w_{ij} = 1\)</span></p></li>
+<li><p>Una intro buena es <span class="citation" data-cites="LeSage2008">LeSage (2008)</span></p></li>
 </ul>
 </section>
 <section id="spatial-autocorrelation-models-sar-cont." class="slide level2 smaller">
@@ -1985,7 +1986,7 @@ Y = &amp; \alpha + \rho W Y + X\beta + \varepsilon,\quad\varepsilon\sim MVN(0,\s
 <ul>
 <li><p>Este tipo de modelos está más cerca de lo que parece, pues el <span class="math inline">\(i\)</span>-ésimo elemento de <span class="math inline">\(Wy\)</span> puede ser expresado como <span class="math inline">\(\frac{\sum_j a_{ij} y_j}{\sum_j a_{ij}}\)</span>, que usualmente se denomina como “exposición” en la literatura de redes sociales, con <span class="math inline">\(a_{ij}\)</span> un elemento de la matriz adjacente.</p></li>
 <li><p>Estos modelos asumen que <span class="math inline">\(W\)</span> es exógeno, en otras palabras, si es que tus datos presentan algo como homofilia, entonces este modelo estará sesgado.</p></li>
-<li><p>Pero al igual que muchos otros en econometría, existen soluciones para problemas de endogeneida (variables instrumentales), he incluso estimadores de varianza robusta corrigiendo por heterocedasticidad..</p></li>
+<li><p>Pero al igual que muchos otros en econometría, existen soluciones para problemas de endogeneida (variables instrumentales), he incluso estimadores de varianza robusta corrigiendo por heterocedasticidad <span class="citation" data-cites="Kelejian2010 Piras2010">(Kelejian and Prucha 2010; Piras 2010)</span>.</p></li>
 </ul>
 </section>
 <section id="que-matriz" class="slide level2">
@@ -2538,7 +2539,7 @@ LR test: p-value
 </tr>
 </table>
 </section>
-<section id="bibliografia" class="slide level2 unnumbered">
+<section id="bibliografia" class="slide level2 unnumbered" style="font-size:60%">
 <h2>Bibliografía</h2>
 <div id="refs" class="references">
 <div id="ref-bivand2008">
@@ -2547,11 +2548,20 @@ LR test: p-value
 <div id="ref-elhorst2013">
 <p>Elhorst, J.P. 2013. <em>Spatial Econometrics: From Cross-Sectional Data to Spatial Panels</em>. SpringerBriefs in Regional Science. Springer Berlin Heidelberg. <a href="https://books.google.cl/books?id=mu25BAAAQBAJ">https://books.google.cl/books?id=mu25BAAAQBAJ</a>.</p>
 </div>
+<div id="ref-Kelejian2010">
+<p>Kelejian, Harry H., and Ingmar R. Prucha. 2010. “Specification and estimation of spatial autoregressive models with autoregressive and heteroskedastic disturbances.” <em>Journal of Econometrics</em> 157 (1): 53–67. <a href="https://doi.org/10.1016/j.jeconom.2009.10.025">https://doi.org/10.1016/j.jeconom.2009.10.025</a>.</p>
+</div>
+<div id="ref-LeSage2008">
+<p>LeSage, James P. 2008. “An Introduction to Spatial Econometrics.” <em>Revue d’économie Industrielle</em> 123 (123): 19–44. <a href="https://doi.org/10.4000/rei.3887">https://doi.org/10.4000/rei.3887</a>.</p>
+</div>
 <div id="ref-LeSage2014">
 <p>LeSage, James P., and R Kelley Pace. 2014. “The Biggest Myth in Spatial Econometrics.” <em>Econometrics</em> 2 (4): 217–49. <a href="https://doi.org/10.2139/ssrn.1725503">https://doi.org/10.2139/ssrn.1725503</a>.</p>
 </div>
 <div id="ref-Moran1950">
 <p>Moran, P. A. P. 1950. “Notes on Continuous Stochastic Phenomena.” <em>Biometrika</em> 37 (1/2): 17. <a href="https://doi.org/10.2307/2332142">https://doi.org/10.2307/2332142</a>.</p>
+</div>
+<div id="ref-Piras2010">
+<p>Piras, Gianfranco. 2010. “sphet: Spatial Models with Heteroskedastic Innovations in R.” <em>Journal of Statistical Software</em> 35 (4): 1–21. <a href="https://doi.org/10.1016/j.landurbplan.2011.01.013">https://doi.org/10.1016/j.landurbplan.2011.01.013</a>.</p>
 </div>
 <div id="ref-ripley2011">
 <p>Ripley, Ruth M, Tom AB Snijders, Zsofia Boda, András Vörös, and Paulina Preciado. 2011. “Manual for Rsiena.” <em>University of Oxford, Department of Statistics, Nuffield College</em> 1.</p>

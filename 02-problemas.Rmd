@@ -1,8 +1,11 @@
 ---
-title: "Untitled"
+title: "Modelos de Grafos Exponenciales (ERGMs)"
 author: "George G. Vega Yon"
-date: "December 16, 2018"
+date: "<img src=\"fig/cana_logo.png\" style=\"width:300px;\"><br>Department of Preventive Medicine<br>University of Southern California<br>20 de Diciembre, 2018"
 output: html_document
+editor_options: 
+  chunk_output_type: console
+bibliography: bibliography.bib
 ---
 
 ```{r setup, include=FALSE}
