@@ -32,7 +32,7 @@ estos modelos.
     ([presentacion](https://htmlpreview.github.io/?https://raw.githubusercontent.com/gvegayon/redes-estadisticas2018/master/03-espacial.html))
 
   - Parte 4: Aplicaciones
-    ([presentacion](https://htmlpreview.github.io/?https://raw.githubusercontent.com/gvegayon/redes-estadisticas2018/master/04-applicaciones.html))
+    ([presentacion](https://htmlpreview.github.io/?https://raw.githubusercontent.com/gvegayon/redes-estadisticas2018/master/04-aplicaciones.html))
 
 ## Bibliografía
 
