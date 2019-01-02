@@ -1,7 +1,7 @@
 ---
 title: "Comportamiento en el contexto de Redes"
 author: "George G. Vega Yon"
-date: "<img src=\"fig/cana_logo.png\" style=\"width:300px;\"><br>Department of Preventive Medicine<br>University of Southern California<br>20 de Diciembre, 2018"
+date: "<img src=\"fig/cana_logo.png\" style=\"width:300px;\"><br>Department of Preventive Medicine<br>University of Southern California<br>2 de Enero, 2019"
 output:
   revealjs::revealjs_presentation:
     self_contained: true
@@ -125,9 +125,10 @@ image(as(y, "dgCMatrix"))
 
 Los modelos SAR:
 
-*   Principalmente utilizados en el contexto de la estadística y la econometria espacial.
+*   Principalmente utilizados en el contexto de la estadística y la econometría espacial.
     
-*   Una amplia gama de modelos. Es posible encontrar los SAR equivalentes a Probit, Logit, MLogit, etc.
+*   Una amplia gama de modelos. Es posible encontrar los SAR equivalentes a Probit,
+    Logit, MLogit, etc.
     
 *   A diferencia del típico modelo de regresión lineal, el modelo SAR tiene la 
     endogeneidad como parte de su especificación utilizando una distribución
@@ -170,7 +171,7 @@ Los modelos SAR:
     
 *   Una propiedad importante e interesante es que $(I_n - \rho W)^{-1}$
     es que tiene una descomposición que implica que los efectos van más allá de
-    los vecinos directos: $I_n + \rho W + \rho^2 W^2 + \dots$
+    los vecinos directos: $I_n + \rho W + \rho^2 W^2 + \dots$ (*power graph*)
     
 ## Resumen
 
@@ -280,6 +281,7 @@ ans1
 # Modelos SAR
 library(spdep)
 (ans2 <- lagsarlm(Y ~ X, listw = mat2listw(W))) # Especificacion correcta
+
 (ans3 <- lagsarlm(Y ~ X, listw = mat2listw(W), Durbin = ~ X[,-1])) # Especificacion incorrecta
 ```
 

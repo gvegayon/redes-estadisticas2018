@@ -1,7 +1,7 @@
 ---
-title: "Modelos de Grafos Exponenciales (ERGMs)"
+title: "Exponential Random Graph Models (ERGMs)"
 author: "George G. Vega Yon"
-date: "<img src=\"fig/cana_logo.png\" style=\"width:300px;\"><br>Department of Preventive Medicine<br>University of Southern California<br>20 de Diciembre, 2018"
+date: "<img src=\"fig/cana_logo.png\" style=\"width:300px;\"><br>Department of Preventive Medicine<br>University of Southern California<br>2 de Enero, 2019"
 output:
   revealjs::revealjs_presentation:
     self_contained: true
@@ -52,6 +52,8 @@ to ERGMs in the social networks literature.
 
 ## Exponential Random Graph Models (ERGMs)
 
+Modelos Exponenciales para Grafos Aleatorios
+
 *   ¿Qué conjunto de sub-estructuras dan origen al grafo observado?
 
 *   Por ejemplo: \# de triadas, \# de diadas homofílicas, \# de k-estrellas, etc.
@@ -75,7 +77,9 @@ to ERGMs in the social networks literature.
 
 ---
 
-*   *Markov dependence* lleva a *Markov Graphs* [@Frank1986].
+*   Conceptualmente, decimos que la interdependencia de los lazos (*Markov dependence*)
+    da origen a lo que denominamos *Markov Graphs* [@Frank1986] (de lo contrario
+    los ERGMs no serían un problem).
 
 *   El modelo (1) puede ser extendido para incluir covariables (*features*) 
     a nivel nodal o de lazo reemplazando $\mathbf{g}(\mathbf{y})$ por
@@ -89,10 +93,10 @@ to ERGMs in the social networks literature.
     $$
     0
     
-    Es la constante de normalización que asegura que (1) es una funcion de probabilidad.
+    Es la constante de normalización que asegura que (1) sea una funcion de probabilidad.
 
 *   Aun restringiendo el conjunto $\mathcal{Y}$ a las redes de tamaño $n$,
-    el numero de elementos de $\mathcal{Y}$ hace la estimación de estos modelos
+    el número de elementos de $\mathcal{Y}$ hace la estimación de estos modelos
     difícil [@Hunter2008]. $N = 2^{n(n-1)}$
     
 *   Una buena intro @ROBINS2007a; @ROBINS2007b.
@@ -126,10 +130,10 @@ Los modelos de Redes Latentes (*Latent Networks*):
 
 -   Las redes sociales son función de un espacio latente (no observado) $\mathbf{Z}$.
 
--   Individuos cercanos dentro de $\mathbf{Z}$ tienen una probabilida mayor de
+-   Individuos cercanos en $\mathbf{Z}$ tienen una probabilida mayor de
     estar conectados.
 
--   Además de estimar un set de parametros $\theta$, la parte fundamental de este
+-   Además de estimar un set de parámetros $\theta$, la parte fundamental de este
     modelo es encontrar dicho espacio latente, $\mathbf{Z}$.
 
 -   Similar a los TERGMs, bajo el supuesto de independencia condicional podemos
@@ -143,7 +147,7 @@ Más detalles en  @hoff2002.
 
 ## ERGMs: Estimación
 
-*   En el caso general, la estimacion de esta familia de modelos no es factible
+*   En el caso general, la estimación de esta familia de modelos no es factible
     utilizando enumeración exahustiva de los grafos.
     
 *   Por ejemplo, si $n = 7$, entonces $\left|\mathcal{Y}\right| = 2^{7(7-1)} \approx 4.39\times10^{12}$
@@ -164,9 +168,9 @@ Más detalles en  @hoff2002.
 2.  Mientras $\neg{}Converencia$ :
     
     a.  Utilizando $\theta^{(t)}$, simula $M$ redes modificando el grafo
-        $\mathbf{Y}_{obs}$ link a link. Esta parte se realiza utilizando un algoritmo
-        de *importance-sampling* donde la ponderacion de cada grafo esta dada por
-        la verosimilityd condicional en $\theta^{(t)}$
+        $\mathbf{Y}_{obs}$ lazo a lazo. Esta parte se realiza utilizando un algoritmo
+        de *importance-sampling* donde la ponderación de cada grafo esta dada por
+        la verosimilitud condicional en $\theta^{(t)}$
     
     b.  Con las redes simuladas, podemos realizar el paso *Newton* para actualizar
         $\theta^{(t)}$ (esta es la parte de iteración en el paquete `ergm`):
@@ -210,7 +214,7 @@ Cuando intentamos estimar ERGMs en redes pequeñas: \pause
 \pause
 
 *   1st Step: Olvidemos el MCMC-MLE, aprovechemos el tamaño de la red para calcular
-    la funcion de log-verosimilitud y apliquemos MLE: \pause
+    la función de log-verosimilitud y apliquemos MLE: \pause
     
     $$
     \Pr\left(\mathbf{Y}=\mathbf{y}|\theta, \mathcal{Y}\right) = \frac{\exp{\theta^{\mbox{T}}\mathbf{g}(\mathbf{y})}}{\kappa\left(\theta, \mathcal{Y}\right)},\quad\mathbf{y}\in\mathcal{Y}
@@ -257,8 +261,8 @@ A esto le llamo ERGMito (Gracias a George Barnett en la conferencia NASN2018!)
     $$
     \pause
     
-*   Estimando una version *pooled* del ERGMito mejoramos la precisión de nuestro
-    estimador.\pause
+*   Estimando una version *pooled* del ERGMito aumentamos el poder de nuestro
+    modelo.\pause
     
 *   Esto también esta en el paquete `lergm`
     

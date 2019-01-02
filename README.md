@@ -34,6 +34,11 @@ estos modelos.
   - Parte 4: Aplicaciones
     ([presentacion](https://htmlpreview.github.io/?https://raw.githubusercontent.com/gvegayon/redes-estadisticas2018/master/04-aplicaciones.html))
 
+## Versiones anteriores
+
+  - Taller en Instituto Milenio de Fundamento de los Datos (IMFD),
+    [Diciembre 2018](tree/IMFD2018)
+
 ## Bibliografía
 
 Artítulos y libros citados:

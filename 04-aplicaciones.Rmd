@@ -1,7 +1,7 @@
 ---
 title: "Algunas aplicaciones"
 author: "George G. Vega Yon"
-date: "<img src=\"fig/cana_logo.png\" style=\"width:300px;\"><br>Department of Preventive Medicine<br>University of Southern California<br>20 de Diciembre, 2018"
+date: "<img src=\"fig/cana_logo.png\" style=\"width:300px;\"><br>Department of Preventive Medicine<br>University of Southern California<br>2 de Enero, 2019"
 output:
   revealjs::revealjs_presentation:
     self_contained: true

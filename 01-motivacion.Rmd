@@ -1,7 +1,7 @@
 ---
 title: "Estadística de Redes y Econometria Espacial (con R)"
 author: "George G. Vega Yon"
-date: "<img src=\"fig/cana_logo.png\" style=\"width:300px;\"><br>Department of Preventive Medicine<br>University of Southern California<br>20 de Diciembre, 2018"
+date: "<img src=\"fig/cana_logo.png\" style=\"width:300px;\"><br>Department of Preventive Medicine<br>University of Southern California<br>2 de Enero, 2019"
 output:
   revealjs::revealjs_presentation:
     self_contained: true
@@ -24,35 +24,41 @@ bibliography: bibliography.bib
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## Acerca de
+## Financiamiento
 
-*   Iquiqueño
+<table style="border: 1px solid transparent">
+<tr style="border: 1px solid transparent">
+<td>![](fig/ARO_logo.png){style="width:300px;"}</td>
+<td>This material is based upon work support by, or in part by, the U.S. Army Research
+Laboratory and the U.S. Army Research Office under grant number W911NF-15-1-0577</td>
+</tr>
+<tr style="border: 1px solid transparent">
+<td>![](fig/usc.png){style="width:300px;"}</td>
+<td>
+Computation for the work described in this paper was supported by the University
+of Southern California’s Center for High-Performance Computing (hpcc.usc.edu).
+</td>
+</tr>
+</table>
 
-*   Papá de 2, esposo de 1
+![](fig/muriteams.png){style="width:800px;"}
 
-*   Quería ser músico, estudié comercial, salté a economía, y ahora estoy
-    en bioestadística...
-    
-*   Programando en R desde el +-2008
-
-*   Ahora, estudiante de doctorado en bioestadística en USC
-
-## Estadistica Descriptiva vs Inferencia Estadistica
+## Estadística Descriptiva vs Inferencia Estadística
 
 Una distinción importante antes de partir:
 
 *   En esta presentación nos enfocaremos en modelos estadísticos de redes, y no
     en estadística descriptiva
     
-*   Nada en contra de lo último, mas aun, describir dinámicas de redes utilizando
+*   Nada en contra de lo último, más aún, describir dinámicas de redes utilizando
     estadística descriptiva es muy importante
     
-*   A que me refiero con ED? Censo triádico, Cuenta de Network Motifs,
+*   A que me refiero con ED? Censo triádico/*Network Motifs*,
     Distribución de grado, etc.
     
-*   Una referencia muy buena para lo anterior es: ... TBD
+<!-- *   Una referencia muy buena para lo anterior es: ... TBD -->
 
-## El que
+## El qué
 
 *   En términos generales, podemos encapsular el análisis estadístico de redes
     en dos(tres) grandes familias:
@@ -67,7 +73,7 @@ Una distinción importante antes de partir:
 *   El principal problema con estos objectos de estudio radica en el hecho de
     que las observaciones son, por construccion, no idependientes.
     
-## Cuando la inferencia estadística se inválida
+## Cuando la inferencia estadística se invalida
 
 *   Usualmente, cuando analizamos una muestra de datos de una poblacion $(y, X)$,
     uno de los principales supuestos es IID
@@ -81,58 +87,59 @@ Una distinción importante antes de partir:
     
     Esto hace la inferencia "sencilla".
     
-*   Pero qué pasa cuando los datos no son iid?
+*   ¿Qué pasa cuando los datos no son iid?
 
 *   Esto es precisamente lo que los modelos de redes y econometría espacial resuelven
     
 
-## Notacion
+## Notación
 
-Primero, algo de notacion
+Primero, algo de notación
 
 *   Un **grafo** es una tupla $(V, E)$ con $E\equiv\left\{(i, j): i,j \in V\right\}$,
     $|V| = n, |E| = m$
 
 *   Para cada componente $i \in V$ observamos un vector $\{y_i, X_i^t\}$ (puede
-    ser una variable dependiente, y un set de caracteristicas)
+    ser una variable dependiente, y un set de características)
     
-*   En general, los grafos que utilizaremos aqui pueden ser representados como
+*   En general, los grafos que utilizaremos aquí pueden ser representados como
     una matriz cuadrada de tamaño $n$, la matriz adjacente, que puede ser o no
-    dicotómica (0/1), o no. La denotaremos como $W$.
+    dicotómica (0/1). La denotaremos como $W$.
     
 ## Estructuras sociales
 
-*   La pregunta clave: Que dio origen a $G$, el grafo?
+*   La pregunta clave: ¿Qué dio origen a $G$, el grafo?
 
-*   El tipo de modelo mas popular (en ciencias sociales) es el denominado
-    **Exponential Random Graph Model** (modelos de grafo exponencial)
+*   El tipo de modelo más popular (en ciencias sociales) es el denominado
+    **Exponential Random Graph Model** (modelos exponenciales de grafos aleatorios)
     
-*   En general (hay excepciones), $y=G$ es una unica observacion, una red, y tratamos
+*   En general (hay excepciones), $y=G$ es una única observacion, una red, y tratamos
     de estimar un modelo de tipo $\Pr\left(Y = y|X, \theta\right)$
     
-*   Como veran, el principal problema de estimar este tipo de modelos es la
-    complejidad numerica... Para calcular la funcion de verosimilitud de un grafo
-    de tamaño $n$, debemos calcular $2^{n(n-1)}$ terminos, es decir, si $n = 6$,
-    la funcion de verosimilitud tiene $2^{6*5} = 1.073.741.824$ terminos :P.
+*   Como verán, el principal problema de estimar este tipo de modelos es la
+    complejidad numérica... Para calcular la función de verosimilitud de un grafo
+    de tamaño $n$, debemos calcular $2^{n(n-1)}$ términos, es decir, si $n = 6$,
+    la funcion de verosimilitud tiene $2^{6*5} = 1.073.741.824$ términos.
     
 ## Comportamiento
 
-*   Si la pregunta es: Como la estructura social/tecnica influye en la variable $y$.
+*   Si la pregunta es: Como la estructura social influye en la variable $y$.
 
-*   Asumiendo o exogeneidad o independencia intertemporal, o estructura estatica,
+*   Asumiendo o exogeneidad o independencia intertemporal, o estructura estática,
     podemos estimar modelos del tipo $\Pr\left(Y = y|X, G, \theta\right)$
     
-*   La Econometria/Estadistica espacial tiene una amplia gama de modelos que pueden
-    ser utilizados en esta logica.
+*   La Econometría/Estadística espacial tiene una amplia gama de modelos que pueden
+    ser utilizados en esta lógica.
     
-*   La familia de modelos que exploraremos aqui es la denominada Spatial Autoregressive
+*   La familia de modelos que exploraremos aquí es la denominada Spatial Autoregressive
     Models (SAR).
     
 *   Nuevamente, la validez del uso de estos modelos depende fundamentalmente en
-    el hecho de si $G$ puede ser considerado exogeno para la variable dependiente.
+    el hecho de si $G$ puede ser considerado exógeno con respecto de la variable
+    dependiente.
   
 
-## Paquetes a utilizar {style="font-size:80%"}
+## Paquetes sugeridos {style="font-size:80%"}
 
 ```{r echo=FALSE}
 descpkg <- function(pkg) {
