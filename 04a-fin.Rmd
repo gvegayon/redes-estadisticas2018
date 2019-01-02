@@ -80,10 +80,10 @@ knitr::include_graphics("fig/cana_logo.png")
 ### ¡Gracias!
 
 <p style="text-align:center!important;">
-`r icon::fa("github")`  [gvegayon](https://github.com/gvegayon/) <br>
-`r icon::fa("twitter")`  [\@gvegayon](https://twitter.com/gvegayon) <br>
-`r icon::fa("home")`  [ggvy.cl](https://ggvy.cl)<br><br>
-<text style="color:gray;font-size:80%">Presentation created with `r icon::fa("heart")` and [revealjs](https:cran.r-project.org/package=revealjs)</text>
+Github:  [gvegayon](https://github.com/gvegayon/) <br>
+Twitter:  [\@gvegayon](https://twitter.com/gvegayon) <br>
+Website:  [ggvy.cl](https://ggvy.cl)<br><br>
+<text style="color:gray;font-size:80%">Presentation created with love and [revealjs](https:cran.r-project.org/package=revealjs)</text>
 </p>
 
 ## Bibliografía {style="font-size:40%"}
