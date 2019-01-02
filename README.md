@@ -32,12 +32,12 @@ estos modelos.
     ([presentacion](https://htmlpreview.github.io/?https://raw.githubusercontent.com/gvegayon/redes-estadisticas2018/master/03-espacial.html))
 
   - Parte 4: Aplicaciones
-    ([presentacion](https://htmlpreview.github.io/?https://raw.githubusercontent.com/gvegayon/redes-estadisticas2018/master/04-aplicaciones.html))
+    ([presentacion](https://htmlpreview.github.io/?https://raw.githubusercontent.com/gvegayon/redes-estadisticas2018/master/04-fin.html))
 
 ## Versiones anteriores
 
   - Taller en Instituto Milenio de Fundamento de los Datos (IMFD),
-    [Diciembre 2018](tree/IMFD2018)
+    [Diciembre 2018](../../tree/IMFD2018)
 
 ## Bibliografía
 
